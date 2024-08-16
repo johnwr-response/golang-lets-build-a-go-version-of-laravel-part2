@@ -102,16 +102,31 @@
   md celeritas/filesystems
   ni celeritas/filesystems/filesystems.go -type file -Value "package filesystems`n`n"
   ```
-
-
-
-
-
-
-
-
-
 ## File systems: Minio
+### Getting started with Minio: connecting and the Put function
+- [Minio documentation](https://min.io/docs/minio/kubernetes/upstream/index.html?ref=docs-redirect)
+- minio-go - MinIO Go client SDK for S3 compatible object storage
+  [GitHub](https://github.com/minio/minio-go)
+  ```shell
+  cd celeritas
+  go get github.com/minio/minio-go/v7
+  go get github.com/minio/minio-go/v7/pkg/credentials
+  cd ..
+  ```
+- Create files and folders
+  ```shell
+  md celeritas/filesystems/minioFileSystem
+  ni celeritas/filesystems/minioFileSystem/minio.go -type file -Value "package minioFileSystem`n`n"
+  ```
+
+
+
+
+
+
+
+
+
 ## File systems: sFTP
 ## File systems: WebDAV
 ## File systems: Amazon S3 Buckets

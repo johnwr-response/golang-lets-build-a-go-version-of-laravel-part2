@@ -56,6 +56,14 @@ the things listed above, but also a reusable code base that will help you jump s
 - This course is intended for developers who wish to further their knowledge of using Go to build web applications
 - It's also great for PHP & Laravel developers who want to build faster, safer web applications using Go
 
-## Project app: celeritas
-- Folder is [not yet decided](.)
+## Project apps: celeritas and myapp
 - Built in Go version 1.23.0
+  - Uses the minio.go package for providing S3 compatible object storage
+    [link](https://github.com/minio/minio-go)
+    - Transiently added packages in `go.mod`
+      - `github.com/go-ini/ini`
+      - `github.com/goccy/go-json`
+      - `github.com/google/uuid`
+      - `github.com/klauspost/cpuid/v2`
+      - `github.com/minio/md5-simd`
+      - `github.com/rs/xid`
