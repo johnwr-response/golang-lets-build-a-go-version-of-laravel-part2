@@ -47,6 +47,21 @@
   mv myapp ../..
   ```
 - Either setup [go-workspace](go.work) manually or tell the ide to do it for you
+### Making sure everything works
+- Fixed Makefile, replaced leading spaces with tab
+- Changed output folder to `dist` when building
+- Fixed `c.App.ListenAndServe() used as value` by removing the error check as ListenAndServe does not return one
+- Removed reference to `github.com/tsawler/celeritas` in top `require` section of `go.mod` 
+- `go mod tidy`
+- `make start`
+- Added `HOST_INTERFACE=localhost` in `.env`
+- Used `HOST_INTERFACE` when starting server to avoid Firewall prompt in Windows
+- Create files and folders
+  ```shell
+  md celeritas/testFolder
+  ni celeritas/testFolder/test.go -type file -Value "package testFolder`n`n"
+  ```
+- Check new test route [link](http://localhost:4000/test-route)
 
 
 

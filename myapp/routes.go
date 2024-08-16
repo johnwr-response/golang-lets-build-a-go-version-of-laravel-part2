@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/tsawler/celeritas/testFolder"
 	"net/http"
 
 	"github.com/tsawler/celeritas"
@@ -13,6 +14,7 @@ func (a *application) routes() *chi.Mux {
 
 	// add routes here
 	a.get("/", a.Handlers.Home)
+	a.get("/test-route", testFolder.TestHandler)
 
 	// static routes
 	fileServer := http.FileServer(http.Dir("./public"))

@@ -1,6 +1,7 @@
 package celeritas
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -226,7 +227,7 @@ func (c *Celeritas) Init(p initPaths) error {
 // ListenAndServe starts the web server
 func (c *Celeritas) ListenAndServe() {
 	srv := &http.Server{
-		Addr:         fmt.Sprintf(":%s", os.Getenv("PORT")),
+		Addr:         fmt.Sprintf("%s:%s", os.Getenv("HOST_INTERFACE"), os.Getenv("PORT")),
 		ErrorLog:     c.ErrorLog,
 		Handler:      c.Routes,
 		IdleTimeout:  30 * time.Second,
@@ -235,15 +236,21 @@ func (c *Celeritas) ListenAndServe() {
 	}
 
 	if c.DB.Pool != nil {
-		defer c.DB.Pool.Close()
+		defer func(Pool *sql.DB) {
+			_ = Pool.Close()
+		}(c.DB.Pool)
 	}
 
 	if redisPool != nil {
-		defer redisPool.Close()
+		defer func(redisPool *redis.Pool) {
+			_ = redisPool.Close()
+		}(redisPool)
 	}
 
 	if badgerConn != nil {
-		defer badgerConn.Close()
+		defer func(badgerConn *badger.DB) {
+			_ = badgerConn.Close()
+		}(badgerConn)
 	}
 
 	c.InfoLog.Printf("Listening on port %s", os.Getenv("PORT"))
