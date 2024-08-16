@@ -16,6 +16,13 @@
   - Browser emulation in testing
 ### About me
 ### Asking for help
+### Installing Go
+- Download Go [here](https://go.dev/dl/)
+- WinGet
+  - Install: ```winget install --id GoLang.Go```
+  - Upgrade: ```winget upgrade --id GoLang.Go```
+- Verify  
+  ```go version```
 
 
 

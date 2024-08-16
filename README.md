@@ -58,4 +58,4 @@ the things listed above, but also a reusable code base that will help you jump s
 
 ## Project app: celeritas
 - Folder is [not yet decided](.)
-- Built in Go version 1.22.5
+- Built in Go version 1.23.0
