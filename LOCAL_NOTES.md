@@ -23,6 +23,18 @@
   - Upgrade: ```winget upgrade --id GoLang.Go```
 - Verify  
   ```go version```
+### Installing an IDE
+- Visual Studio Code
+  - Install: ```winget install --id Microsoft.VisualStudioCode```
+  - Upgrade: ```winget upgrade --id Microsoft.VisualStudioCode```
+  - Add extensions:
+    - [Go]
+      - Also, press `shift+ctl` and search for `Go: Install/Update Tools`
+        - Click on it, select all associated checkboxes and click OK to install them
+    - [goTemplate-syntax]
+- GoLand
+  - Install using toolbox: ```winget install --id JetBrains.Toolbox```
+  - Install directly: ```winget install --id JetBrains.GoLand```
 
 
 
