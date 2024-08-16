@@ -36,6 +36,17 @@
   - Install using toolbox: ```winget install --id JetBrains.Toolbox```
   - Install directly: ```winget install --id JetBrains.GoLand```
 
+## Project Setup
+### Setting up our project
+- Run the necessary setup commands
+  ```shell
+  cd celeritas
+  make build
+  cd dist
+  ./celeritas.exe new myapp
+  mv myapp ../..
+  ```
+- Either setup [go-workspace](go.work) manually or tell the ide to do it for you
 
 
 
@@ -46,19 +57,17 @@
 
 
 
-
-### Project Setup
-### Setting up our remote file systems
-### File systems: Minio
-### File systems: sFTP
-### File systems: WebDAV
-### File systems: Amazon S3 Buckets
-### Building a File System Agnostic File Uploader
-### Improving our Migrations package
-### Social Authentication with OAuth2
-### RPC, Graceful Shutdown, and additional changes
-### Testing
-### Final changes to the Celeritas CLI application
+## Setting up our remote file systems
+## File systems: Minio
+## File systems: sFTP
+## File systems: WebDAV
+## File systems: Amazon S3 Buckets
+## Building a File System Agnostic File Uploader
+## Improving our Migrations package
+## Social Authentication with OAuth2
+## RPC, Graceful Shutdown, and additional changes
+## Testing
+## Final changes to the Celeritas CLI application
 
 ## Repo creation Log
 - git init
