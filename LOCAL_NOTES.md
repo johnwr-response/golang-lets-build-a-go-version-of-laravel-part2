@@ -84,6 +84,18 @@
   [Link](https://min.io/)
 - Go to local instance [Link](http://localhost:9001) and log in
 - Create a Bucket called `testbucket`
+### Configuring sFTP
+- SFTPGo -  SFTP/FTP/WebDAV server. S3, GCS, Azure and local fs as storage backends
+  [Link](https://hub.docker.com/r/drakkan/sftpgo)
+- Go to local instance [Link](http://localhost:8080) and create an `admin` user
+  - Username: admin
+  - Password: password
+- Create a new user by clicking `Users` and `Add`
+  - Username: sftp
+  - Password: password
+  - Set to `Root directory` to `/mnt/data`
+  - Make sure an Asterisk (*) is selected under `ACLs` and `Permissions`
+  - Click `Save`
 
 
 
