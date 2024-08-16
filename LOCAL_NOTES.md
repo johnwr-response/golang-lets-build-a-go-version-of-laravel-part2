@@ -65,6 +65,20 @@
 
 ## Setting up our remote file systems
 ### What we're going to create
+### Setting up our remote file systems using Docker
+- Create files and folders
+  ```shell
+  md myapp/docker-data/postgres
+  md myapp/docker-data/redis
+  md myapp/docker-data/mariadb
+  md myapp/docker-data/sftp
+  md myapp/docker-data/home
+  md myapp/docker-data/minio
+  ```
+- Run Docker containers
+  ```shell
+  docker compose -f ./myapp/docker-compose.yml up  -d
+  ```
 
 
 

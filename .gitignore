@@ -15,8 +15,9 @@
 tmp/
 dist/
 
-# Mounted databases in Docker
+# Mounted volumes in Docker
 /*/docker/db-data/*
+/*/docker-data/*
 
 # Powershell
 .folderPsHistory.txt
