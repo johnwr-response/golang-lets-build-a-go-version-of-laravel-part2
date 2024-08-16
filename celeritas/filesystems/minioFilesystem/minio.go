@@ -1,4 +1,4 @@
-package minioFileSystem
+package minioFilesystem
 
 import (
 	"context"
@@ -109,6 +109,7 @@ func (m *Minio) Delete(itemsToDelete []string) bool {
 	return true
 }
 
+// Get pulls a file from the remote file system and saves it somewhere on our server
 func (m *Minio) Get(destination string, items ...string) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

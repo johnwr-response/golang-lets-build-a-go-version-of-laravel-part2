@@ -115,12 +115,22 @@
   ```
 - Create files and folders
   ```shell
-  md celeritas/filesystems/minioFileSystem
-  ni celeritas/filesystems/minioFileSystem/minio.go -type file -Value "package minioFileSystem`n`n"
+  md celeritas/filesystems/minioFilesystem
+  ni celeritas/filesystems/minioFilesystem/minio.go -type file -Value "package minioFilesystem`n`n"
   ```
 ### Implementing the List function in Minio
 ### Implementing the Delete function in Minio
 ### Implementing the Get function in Minio
+### Creating stub filesystems for the other three types
+- Create files and folders
+  ```shell
+  md celeritas/filesystems/s3Filesystem
+  md celeritas/filesystems/sFtpFilesystem
+  md celeritas/filesystems/webdavFilesystem
+  ni celeritas/filesystems/s3Filesystem/s3.go -type file -Value "package s3Filesystem`n`n"
+  ni celeritas/filesystems/sFtpFilesystem/sftp.go -type file -Value "package sFtpFilesystem`n`n"
+  ni celeritas/filesystems/webdavFilesystem/webdav.go -type file -Value "package webdavFilesystem`n`n"
+  ```
 
 
 
