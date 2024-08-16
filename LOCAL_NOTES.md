@@ -131,6 +131,7 @@
   ni celeritas/filesystems/sFtpFilesystem/sftp.go -type file -Value "package sFtpFilesystem`n`n"
   ni celeritas/filesystems/webdavFilesystem/webdav.go -type file -Value "package webdavFilesystem`n`n"
   ```
+### Adding filesystems to Celeritas
 
 
 

@@ -3,6 +3,7 @@ package celeritas
 import (
 	"database/sql"
 	"fmt"
+	"github.com/tsawler/celeritas/filesystems/minioFilesystem"
 	"log"
 	"net/http"
 	"os"
@@ -50,6 +51,7 @@ type Celeritas struct {
 	Scheduler     *cron.Cron
 	Mail          mailer.Mail
 	Server        Server
+	Filesystems   map[string]interface{}
 }
 
 type Server struct {
@@ -206,6 +208,7 @@ func (c *Celeritas) New(rootPath string) error {
 	}
 
 	c.createRenderer()
+	c.Filesystems = c.createFilesystems()
 	go c.Mail.ListenForMail()
 
 	return nil
@@ -382,4 +385,25 @@ func (c *Celeritas) BuildDSN() string {
 	}
 
 	return dsn
+}
+
+func (c *Celeritas) createFilesystems() map[string]interface{} {
+	filesystems := make(map[string]interface{})
+	if os.Getenv("MINIO_SECRET") != "" {
+		useSSL := false
+		if strings.ToLower(os.Getenv("MINIO_USE_SSL")) == "true" {
+			useSSL = true
+		}
+		minio := minioFilesystem.Minio{
+			Endpoint: os.Getenv("MINIO_ENDPOINT"),
+			Key:      os.Getenv("MINIO_KEY"),
+			Secret:   os.Getenv("MINIO_SECRET"),
+			UseSSL:   useSSL,
+			Region:   os.Getenv("MINIO_REGION"),
+			Bucket:   os.Getenv("MINIO_BUCKET"),
+		}
+		filesystems["MINIO"] = minio
+	}
+
+	return filesystems
 }
