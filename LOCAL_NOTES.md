@@ -1,17 +1,31 @@
 # Let's Build a Go version of Laravel - Part 2
 
-
-
-
-
-
-
-
-
-
-
-
 ## Introduction
+### Introduction
+- Let's build a Go version of Laravel: Part II
+  - This course should *only* be taken *after* the first course
+  - We'll build on core functionality
+- What we'll cover
+  - Remote file systems: Minio, sFTP, WebDAV, Amazon S3 buckets
+  - A file system agnostic file uploader
+  - Improving migrations to support Fizz
+  - Social authentication: GitHun and Google
+  - RPC calls
+  - Simplify testing
+  - Screen capture in testing
+  - Browser emulation in testing
+
+
+
+
+
+
+
+
+
+
+
+
 ### Project Setup
 ### Setting up our remote file systems
 ### File systems: Minio
