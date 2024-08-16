@@ -136,6 +136,7 @@
 - `go mod tidy`
 - Video claims to copy test file directly into `./docker-data/minio/testbucket` from IDE, but that did not work
 - Had to upload test file through [browser](http://localhost:9001/browser/testbucket)
+### Creating a handler to list the remote file system
 
 
 
