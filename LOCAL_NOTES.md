@@ -96,6 +96,12 @@
   - Set to `Root directory` to `/mnt/data`
   - Make sure an Asterisk (*) is selected under `ACLs` and `Permissions`
   - Click `Save`
+### Setting up a type for file systems
+- Create files and folders
+  ```shell
+  md celeritas/filesystems
+  ni celeritas/filesystems/filesystems.go -type file -Value "package filesystems`n`n"
+  ```
 
 
 
