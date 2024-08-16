@@ -119,6 +119,7 @@
   ni celeritas/filesystems/minioFileSystem/minio.go -type file -Value "package minioFileSystem`n`n"
   ```
 ### Implementing the List function in Minio
+### Implementing the Delete function in Minio
 
 
 
