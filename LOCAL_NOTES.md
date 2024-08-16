@@ -120,6 +120,7 @@
   ```
 ### Implementing the List function in Minio
 ### Implementing the Delete function in Minio
+### Implementing the Get function in Minio
 
 
 

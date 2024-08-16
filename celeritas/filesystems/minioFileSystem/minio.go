@@ -20,6 +20,7 @@ type Minio struct {
 	Bucket   string
 }
 
+// getCredentials generates a minio client using the credentials stored in the Minio type
 func (m *Minio) getCredentials() *minio.Client {
 	client, err := minio.New(m.Endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(m.Key, m.Secret, ""),
@@ -31,6 +32,7 @@ func (m *Minio) getCredentials() *minio.Client {
 	return client
 }
 
+// Put transfers a file to the remote file system
 func (m *Minio) Put(fileName, folder string) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -49,6 +51,7 @@ func (m *Minio) Put(fileName, folder string) error {
 	return nil
 }
 
+// List returns a listing of all files in the remote bucket with the given prefix, except for files named with a leading .
 func (m *Minio) List(prefix string) ([]filesystems.Listing, error) {
 	var listing []filesystems.Listing
 
@@ -85,6 +88,7 @@ func (m *Minio) List(prefix string) ([]filesystems.Listing, error) {
 	return listing, nil
 }
 
+// Delete removes one or more files from the remote filesystem
 func (m *Minio) Delete(itemsToDelete []string) bool {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -103,4 +107,21 @@ func (m *Minio) Delete(itemsToDelete []string) bool {
 		}
 	}
 	return true
+}
+
+func (m *Minio) Get(destination string, items ...string) error {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	client := m.getCredentials()
+
+	for _, item := range items {
+		err := client.FGetObject(ctx, m.Bucket, item, fmt.Sprintf("%s/%s", destination, path.Base(item)), minio.GetObjectOptions{})
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+	}
+
+	return nil
 }
