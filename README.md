@@ -1,4 +1,4 @@
-# golang-lets-build-a-go-version-of-laravel
+# golang-lets-build-a-go-version-of-laravel-part2
 The followup to "Let's Build a Go Version of Laravel," with support for remote file systems, Social Auth, and more.
 
 ## What you'll learn
