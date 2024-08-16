@@ -79,6 +79,11 @@
   ```shell
   docker compose -f ./myapp/docker-compose.yml up  -d
   ```
+### Configuring Minio
+- Minio - Multi-Cloud Object Storage
+  [Link](https://min.io/)
+- Go to local instance [Link](http://localhost:9001) and log in
+- Create a Bucket called `testbucket`
 
 
 
