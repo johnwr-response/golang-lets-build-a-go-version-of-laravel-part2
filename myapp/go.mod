@@ -1,6 +1,6 @@
 module myapp
 
-go 1.17
+go 1.23.0
 
 require (
 	github.com/CloudyKit/jet/v6 v6.1.0

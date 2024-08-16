@@ -1,8 +1,6 @@
 module github.com/tsawler/celeritas
 
-go 1.21
-
-toolchain go1.23.0
+go 1.23.0
 
 require (
 	github.com/CloudyKit/jet/v6 v6.1.0
