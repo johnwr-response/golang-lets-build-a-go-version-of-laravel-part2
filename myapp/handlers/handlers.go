@@ -113,6 +113,13 @@ func (h *Handlers) PostUploadToFS(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+	case "SFTP":
+		fs := h.App.Filesystems["SFTP"].(sFtpFilesystem.SFTP)
+		err := fs.Put(filename, "")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
 	h.App.Session.Put(r.Context(), "flash", "File uploaded successfully!")
