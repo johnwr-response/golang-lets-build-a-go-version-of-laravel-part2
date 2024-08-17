@@ -128,6 +128,40 @@ func (s *S3) List(prefix string) ([]filesystems.Listing, error) {
 
 // Delete removes one or more files from the remote filesystem
 func (s *S3) Delete(itemsToDelete []string) bool {
+	cred := s.getCredentials()
+	sess := session.Must(session.NewSession(&aws.Config{
+		Endpoint:    &s.Endpoint,
+		Region:      &s.Region,
+		Credentials: cred,
+	}))
+
+	svc := s3.New(sess)
+
+	for _, itemToDelete := range itemsToDelete {
+		input := &s3.DeleteObjectsInput{
+			Bucket: aws.String(s.Bucket),
+			Delete: &s3.Delete{
+				Objects: []*s3.ObjectIdentifier{
+					{
+						Key: aws.String(itemToDelete),
+					},
+				},
+				Quiet: aws.Bool(false),
+			},
+		}
+		_, err := svc.DeleteObjects(input)
+		if err != nil {
+			var aErr awserr.Error
+			if errors.As(err, &aErr) {
+				switch aErr.Code() {
+				default:
+					fmt.Println("Amazon error:", aErr.Error())
+					return false
+				}
+			}
+		}
+	}
+
 	return true
 }
 

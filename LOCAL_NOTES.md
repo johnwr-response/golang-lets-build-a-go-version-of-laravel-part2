@@ -194,6 +194,7 @@
   cd ..
   ```
 ### Implementing the Put function for S3 file systems
+### Implementing the Delete function for S3 file systems
 
 
 
