@@ -170,13 +170,21 @@
 ### Cleaning up the Get function to avoid resource leaks
 - SIDENOTE: Clean up the handling of defer statements in loop
 
-
-
-
-
-
-
 ## File systems: WebDAV
+### Implementing the Put function for WebDAV
+- GoWebDAV - A golang WebDAV client library and command line tool
+  [GitHub](https://github.com/studio-b12/gowebdav)
+  ```shell
+  cd celeritas
+  go get github.com/studio-b12/gowebdav
+  cd ..
+  ```
+
+
+
+
+
+
 ## File systems: Amazon S3 Buckets
 ## Building a File System Agnostic File Uploader
 ## Improving our Migrations package

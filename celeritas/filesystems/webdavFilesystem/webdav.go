@@ -1,6 +1,12 @@
 package webdavFilesystem
 
-import "github.com/tsawler/celeritas/filesystems"
+import (
+	"fmt"
+	"github.com/studio-b12/gowebdav"
+	"github.com/tsawler/celeritas/filesystems"
+	"os"
+	"path"
+)
 
 type WebDAV struct {
 	Host string
@@ -8,23 +14,44 @@ type WebDAV struct {
 	Pass string
 }
 
+// getCredentials generates sftp client using the credentials stored in the SFTP type
+func (w *WebDAV) getCredentials() *gowebdav.Client {
+	c := gowebdav.NewClient(w.Host, w.User, w.Pass)
+	return c
+}
+
 // Put transfers a file to the remote file system
-func (s *WebDAV) Put(fileName, folder string) error {
+func (w *WebDAV) Put(fileName, folder string) error {
+	client := w.getCredentials()
+
+	file, err := os.Open(fileName)
+	if err != nil {
+		return err
+	}
+	defer func(file *os.File) {
+		_ = file.Close()
+	}(file)
+
+	err = client.WriteStream(fmt.Sprintf("%s/%s", folder, path.Base(fileName)), file, 0664)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 // List returns a listing of all files in the remote bucket with the given prefix, except for files named with a leading .
-func (s *WebDAV) List(prefix string) ([]filesystems.Listing, error) {
+func (w *WebDAV) List(prefix string) ([]filesystems.Listing, error) {
 	var listing []filesystems.Listing
 	return listing, nil
 }
 
 // Delete removes one or more files from the remote filesystem
-func (s *WebDAV) Delete(itemsToDelete []string) bool {
+func (w *WebDAV) Delete(itemsToDelete []string) bool {
 	return true
 }
 
 // Get pulls a file from the remote file system and saves it somewhere on our server
-func (s *WebDAV) Get(destination string, items ...string) error {
+func (w *WebDAV) Get(destination string, items ...string) error {
 	return nil
 }

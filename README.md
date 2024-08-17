@@ -71,3 +71,5 @@ the things listed above, but also a reusable code base that will help you jump s
     [link](https://github.com/pkg/sftp)
     - Transiently added packages in `go.mod`
       - `github.com/kr/fs`
+  - Uses the GoWebDAV package adding Webdav support
+    [link](https://github.com/studio-b12/gowebdav)
