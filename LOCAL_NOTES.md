@@ -163,6 +163,8 @@
     statement in an IIFE (Immediately Invoked Function Expression) nevertheless. This ensures that the object will now
     be closed and there will not be a memory leak.
 ### Connecting Celeritas to our sFTP file system
+### Updating our ListFS handler to support sFTP
+- SIDENOTE: Fixed bug in `make restart`
 
 
 

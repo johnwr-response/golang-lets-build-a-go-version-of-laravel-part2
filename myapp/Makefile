@@ -117,7 +117,7 @@ start: run
 start_fg: run_fg
 
 ## restart: restarts binary in background
-restart: stop start
+restart: build start
 
 ## restart: restarts binary in foreground
-restart_fg: stop start_fg
+restart_fg: build start_fg

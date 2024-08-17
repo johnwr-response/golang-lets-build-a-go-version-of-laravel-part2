@@ -6,6 +6,7 @@ import (
 	"github.com/tsawler/celeritas"
 	"github.com/tsawler/celeritas/filesystems"
 	"github.com/tsawler/celeritas/filesystems/minioFilesystem"
+	"github.com/tsawler/celeritas/filesystems/sFtpFilesystem"
 	"io"
 	"log"
 	"mime/multipart"
@@ -55,6 +56,11 @@ func (h *Handlers) ListFs(w http.ResponseWriter, r *http.Request) {
 			f := h.App.Filesystems["MINIO"].(minioFilesystem.Minio)
 			fs = &f
 			fsType = "MINIO"
+		case "SFTP":
+			log.Println("Using SFTP for fsType")
+			f := h.App.Filesystems["SFTP"].(sFtpFilesystem.SFTP)
+			fs = &f
+			fsType = "SFTP"
 		}
 
 		if fs != nil {
