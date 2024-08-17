@@ -139,3 +139,34 @@ func getFileToUpload(r *http.Request, fieldName string) (string, error) {
 
 	return fmt.Sprintf("./tmp/%s", header.Filename), nil
 }
+
+func (h *Handlers) DeleteFromFS(w http.ResponseWriter, r *http.Request) {
+	var fs filesystems.FS
+	fsType := r.URL.Query().Get("fs_type")
+	item := r.URL.Query().Get("file")
+
+	curPath := "/"
+	if r.URL.Query().Get("curPath") != "" {
+		curPath = r.URL.Query().Get("curPath")
+		curPath, _ = url.QueryUnescape(curPath)
+
+		if curPath == "/" {
+			curPath = ""
+		}
+	}
+
+	switch fsType {
+	case "MINIO":
+		f := h.App.Filesystems["MINIO"].(minioFilesystem.Minio)
+		fs = &f
+	}
+
+	if fs != nil {
+		deleted := fs.Delete([]string{item})
+		if deleted {
+			h.App.Session.Put(r.Context(), "flash", fmt.Sprintf("%s was deleted", item))
+		}
+	}
+
+	http.Redirect(w, r, fmt.Sprintf("/list-fs?fs-type=%s&curPath=%s", fsType, curPath), http.StatusSeeOther)
+}
