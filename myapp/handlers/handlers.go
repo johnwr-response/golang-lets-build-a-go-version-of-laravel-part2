@@ -73,5 +73,16 @@ func (h *Handlers) ListFs(w http.ResponseWriter, r *http.Request) {
 		h.App.ErrorLog.Println("error rendering:", err)
 		return
 	}
+}
 
+func (h *Handlers) UploadToFS(w http.ResponseWriter, r *http.Request) {
+	fsType := r.URL.Query().Get("type")
+
+	vars := make(jet.VarMap)
+	vars.Set("fs_type", fsType)
+
+	err := h.render(w, r, "upload", vars, nil)
+	if err != nil {
+		h.App.ErrorLog.Println("error rendering:", err)
+	}
 }
