@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/tsawler/celeritas/filesystems/minioFilesystem"
+	"github.com/tsawler/celeritas/filesystems/sFtpFilesystem"
 	"log"
 	"net/http"
 	"os"
@@ -403,6 +404,16 @@ func (c *Celeritas) createFilesystems() map[string]interface{} {
 			Bucket:   os.Getenv("MINIO_BUCKET"),
 		}
 		filesystems["MINIO"] = minio
+	}
+
+	if os.Getenv("SFTP_HOST") != "" {
+		sftp := sFtpFilesystem.SFTP{
+			Host: os.Getenv("SFTP_HOST"),
+			User: os.Getenv("SFTP_USER"),
+			Pass: os.Getenv("SFTP_PASS"),
+			Port: os.Getenv("SFTP_PORT"),
+		}
+		filesystems["SFTP"] = sftp
 	}
 
 	return filesystems

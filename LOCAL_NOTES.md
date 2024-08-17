@@ -162,6 +162,7 @@
     whose pointed-to values are being updated on each iteration. There was no real leak here, but wrapped the defer
     statement in an IIFE (Immediately Invoked Function Expression) nevertheless. This ensures that the object will now
     be closed and there will not be a memory leak.
+### Connecting Celeritas to our sFTP file system
 
 
 
