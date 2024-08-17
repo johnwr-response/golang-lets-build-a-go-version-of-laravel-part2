@@ -137,6 +137,9 @@
 - Video claims to copy test file directly into `./docker-data/minio/testbucket` from IDE, but that did not work
 - Had to upload test file through [browser](http://localhost:9001/browser/testbucket)
 ### Creating a handler to list the remote file system
+### Connecting the handler to a route and trying things out
+- NOTE: The use of prefix has changed with later versions of Minio. If at root level, set "" as prefix instead of "/"
+- NOTE: Files can not be placed directly in docker-data folder, must be uploaded
 
 
 

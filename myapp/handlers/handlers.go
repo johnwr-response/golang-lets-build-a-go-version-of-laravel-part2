@@ -5,6 +5,7 @@ import (
 	"github.com/tsawler/celeritas"
 	"github.com/tsawler/celeritas/filesystems"
 	"github.com/tsawler/celeritas/filesystems/minioFilesystem"
+	"log"
 	"myapp/data"
 	"net/http"
 	"net/url"
@@ -37,11 +38,16 @@ func (h *Handlers) ListFs(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Query().Get("curPath") != "" {
 		curPath = r.URL.Query().Get("curPath")
 		curPath, _ = url.QueryUnescape(curPath)
+
+		if curPath == "/" {
+			curPath = ""
+		}
 	}
 
 	if fsType != "" {
 		switch fsType {
 		case "MINIO":
+			log.Println("Using MINIO for fsType")
 			f := h.App.Filesystems["MINIO"].(minioFilesystem.Minio)
 			fs = &f
 			fsType = "MINIO"
