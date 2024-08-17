@@ -197,6 +197,28 @@
 ### Implementing the Delete function for S3 file systems
 ### Implementing the Get function for S3 buckets
 ### Connecting Celeritas to our S3 file system
+### Creating an S3 compatible bucket on Linode
+- This can be done on any S3 compatible service
+  - On `Linode`, go to `Object Storage` 
+  - On `Digital Ocean`, go to `Spaces`
+  - On `Amazon`, go to `S3 Buckets`
+- Create a bucket
+  - Label: `Celeritas`
+  - Region: Select a region near you
+- Go to access
+  - Make ACL `Public Read`
+  - Leave CORS `on`
+- Create access to you bucket
+  - Generate `Access Key`
+    - Label: `celeritas`
+    - Leave Limited Access `off`
+- Copy your Access Key information
+  - Access Key: Put this in your `S3_KEY` field in your `.env` file
+  - Secret Key Put this in your `SECRET_KEY` field in your `.env` file
+- Populate the rest of the `S3` fields in your `.env` file
+  - `S3_REGION`: `us-east-1` ## Sample, must match where you selected above
+  - `S3_ENDPOINT`: `us-east-1.linodeobjects.com` ## Sample, must match where you selected above
+  - `S3_BUCKET`: `celeritas` ## Match what you created above
 
 
 
