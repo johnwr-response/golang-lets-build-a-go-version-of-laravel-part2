@@ -6,6 +6,7 @@ import (
 	"github.com/tsawler/celeritas"
 	"github.com/tsawler/celeritas/filesystems"
 	"github.com/tsawler/celeritas/filesystems/minioFilesystem"
+	"github.com/tsawler/celeritas/filesystems/s3Filesystem"
 	"github.com/tsawler/celeritas/filesystems/sFtpFilesystem"
 	"github.com/tsawler/celeritas/filesystems/webdavFilesystem"
 	"io"
@@ -67,6 +68,11 @@ func (h *Handlers) ListFs(w http.ResponseWriter, r *http.Request) {
 			f := h.App.Filesystems["WEBDAV"].(webdavFilesystem.WebDAV)
 			fs = &f
 			fsType = "WEBDAV"
+		case "S3":
+			log.Println("Using S3 for fsType")
+			f := h.App.Filesystems["S3"].(s3Filesystem.S3)
+			fs = &f
+			fsType = "S3"
 		}
 
 		if fs != nil {
@@ -133,6 +139,13 @@ func (h *Handlers) PostUploadToFS(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+	case "S3":
+		fs := h.App.Filesystems["S3"].(s3Filesystem.S3)
+		err := fs.Put(filename, "")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
 	h.App.Session.Put(r.Context(), "flash", "File uploaded successfully!")
@@ -190,6 +203,9 @@ func (h *Handlers) DeleteFromFS(w http.ResponseWriter, r *http.Request) {
 		fs = &f
 	case "WEBDAV":
 		f := h.App.Filesystems["WEBDAV"].(webdavFilesystem.WebDAV)
+		fs = &f
+	case "S3":
+		f := h.App.Filesystems["S3"].(s3Filesystem.S3)
 		fs = &f
 	}
 

@@ -219,6 +219,7 @@
   - `S3_REGION`: `us-east-1` ## Sample, must match where you selected above
   - `S3_ENDPOINT`: `us-east-1.linodeobjects.com` ## Sample, must match where you selected above
   - `S3_BUCKET`: `celeritas` ## Match what you created above
+### Updating our handlers for S3 buckets
 
 
 
