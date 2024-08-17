@@ -17,6 +17,7 @@ func (a *application) routes() *chi.Mux {
 	a.get("/list-fs", a.Handlers.ListFs)
 
 	a.get("/files/upload", a.Handlers.UploadToFS)
+	a.post("/files/upload", a.Handlers.PostUploadToFS)
 
 	// static routes
 	fileServer := http.FileServer(http.Dir("./public"))

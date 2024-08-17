@@ -141,6 +141,7 @@
 - NOTE: The use of prefix has changed with later versions of Minio. If at root level, set "" as prefix instead of "/"
 - NOTE: Files can not be placed directly in docker-data folder, must be uploaded
 ### Creating handlers to display the upload form
+### Creating the handler to process the file upload
 
 
 

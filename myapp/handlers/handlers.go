@@ -1,14 +1,18 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/CloudyKit/jet/v6"
 	"github.com/tsawler/celeritas"
 	"github.com/tsawler/celeritas/filesystems"
 	"github.com/tsawler/celeritas/filesystems/minioFilesystem"
+	"io"
 	"log"
+	"mime/multipart"
 	"myapp/data"
 	"net/http"
 	"net/url"
+	"os"
 )
 
 // Handlers is the type for handlers, and gives access to Celeritas and models
@@ -85,4 +89,53 @@ func (h *Handlers) UploadToFS(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.App.ErrorLog.Println("error rendering:", err)
 	}
+}
+
+func (h *Handlers) PostUploadToFS(w http.ResponseWriter, r *http.Request) {
+	filename, err := getFileToUpload(r, "formFile")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	uploadType := r.Form.Get("upload-type")
+	switch uploadType {
+	case "MINIO":
+		fs := h.App.Filesystems["MINIO"].(minioFilesystem.Minio)
+		err := fs.Put(filename, "")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	h.App.Session.Put(r.Context(), "flash", "File uploaded successfully!")
+	http.Redirect(w, r, "/files/upload?type="+uploadType, http.StatusSeeOther)
+}
+
+func getFileToUpload(r *http.Request, fieldName string) (string, error) {
+	_ = r.ParseMultipartForm(10 << 20)
+
+	file, header, err := r.FormFile(fieldName)
+	if err != nil {
+		return "", err
+	}
+	defer func(file multipart.File) {
+		_ = file.Close()
+	}(file)
+
+	dst, err := os.Create(fmt.Sprintf("./tmp/%s", header.Filename))
+	if err != nil {
+		return "", err
+	}
+	defer func(dst *os.File) {
+		_ = dst.Close()
+	}(dst)
+
+	_, err = io.Copy(dst, file)
+	if err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("./tmp/%s", header.Filename), nil
 }
