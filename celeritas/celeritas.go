@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/tsawler/celeritas/filesystems/minioFilesystem"
+	"github.com/tsawler/celeritas/filesystems/s3Filesystem"
 	"github.com/tsawler/celeritas/filesystems/sFtpFilesystem"
 	"github.com/tsawler/celeritas/filesystems/webdavFilesystem"
 	"log"
@@ -423,6 +424,16 @@ func (c *Celeritas) createFilesystems() map[string]interface{} {
 			Pass: os.Getenv("WEBDAV_PASS"),
 		}
 		filesystems["WEBDAV"] = webdav
+	}
+	if os.Getenv("S3_KEY") != "" {
+		s3 := s3Filesystem.S3{
+			Key:      os.Getenv("S3_KEY"),
+			Secret:   os.Getenv("S3_SECRET"),
+			Region:   os.Getenv("S3_REGION"),
+			Endpoint: os.Getenv("S3_ENDPOINT"),
+			Bucket:   os.Getenv("S3_BUCKET"),
+		}
+		filesystems["S3"] = s3
 	}
 
 	return filesystems

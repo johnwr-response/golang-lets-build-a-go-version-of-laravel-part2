@@ -196,6 +196,7 @@
 ### Implementing the Put function for S3 file systems
 ### Implementing the Delete function for S3 file systems
 ### Implementing the Get function for S3 buckets
+### Connecting Celeritas to our S3 file system
 
 
 
