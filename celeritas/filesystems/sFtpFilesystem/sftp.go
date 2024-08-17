@@ -1,6 +1,15 @@
 package sFtpFilesystem
 
-import "github.com/tsawler/celeritas/filesystems"
+import (
+	"fmt"
+	"github.com/pkg/sftp"
+	"github.com/tsawler/celeritas/filesystems"
+	"golang.org/x/crypto/ssh"
+	"io"
+	"log"
+	"os"
+	"path"
+)
 
 type SFTP struct {
 	Host string
@@ -9,8 +18,61 @@ type SFTP struct {
 	Port string
 }
 
+// getCredentials generates sftp client using the credentials stored in the SFTP type
+func (s *SFTP) getCredentials() (*sftp.Client, error) {
+	addr := fmt.Sprintf("%s:%s", s.Host, s.Port)
+	config := &ssh.ClientConfig{
+		User:            s.User,
+		Auth:            []ssh.AuthMethod{ssh.Password(s.Pass)},
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+	}
+	conn, err := ssh.Dial("tcp", addr, config)
+	if err != nil {
+		return nil, err
+	}
+	client, err := sftp.NewClient(conn)
+	if err != nil {
+		return nil, err
+	}
+	cwd, err := client.Getwd()
+	if err != nil {
+		return nil, err
+	}
+	log.Println("Current working directory: ", cwd)
+
+	return client, nil
+}
+
 // Put transfers a file to the remote file system
 func (s *SFTP) Put(fileName, folder string) error {
+	client, err := s.getCredentials()
+	if err != nil {
+		return err
+	}
+	defer func(client *sftp.Client) {
+		_ = client.Close()
+	}(client)
+
+	f, err := os.Open(fileName)
+	if err != nil {
+		return err
+	}
+	defer func(f *os.File) {
+		_ = f.Close()
+	}(f)
+
+	f2, err := client.Create(path.Base(fileName))
+	if err != nil {
+		return err
+	}
+	defer func(f2 *sftp.File) {
+		_ = f2.Close()
+	}(f2)
+
+	if _, err := io.Copy(f2, f); err != nil {
+		return err
+	}
+
 	return nil
 }
 

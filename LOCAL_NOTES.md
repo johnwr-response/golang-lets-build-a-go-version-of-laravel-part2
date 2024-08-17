@@ -144,15 +144,23 @@
 ### Creating the handler to process the file upload
 ### Creating the delete handler
 
-
-
-
-
-
-
-
-
 ## File systems: sFTP
+### Implementing the Put function for sFTP
+- SIDENOTE! Updated Makefile in myapp to fix make start and added running tests
+- sftp - SFTP support for the go.crypto/ssh package
+  [GitHub](https://github.com/pkg/sftp)
+  ```shell
+  cd celeritas
+  go get github.com/pkg/sftp
+  cd ..
+  ```
+
+
+
+
+
+
+
 ## File systems: WebDAV
 ## File systems: Amazon S3 Buckets
 ## Building a File System Agnostic File Uploader

@@ -67,3 +67,7 @@ the things listed above, but also a reusable code base that will help you jump s
       - `github.com/klauspost/cpuid/v2`
       - `github.com/minio/md5-simd`
       - `github.com/rs/xid`
+  - Uses the sftp package adding SFTP support for the go.crypto/ssh package
+    [link](https://github.com/pkg/sftp)
+    - Transiently added packages in `go.mod`
+      - `github.com/kr/fs`
