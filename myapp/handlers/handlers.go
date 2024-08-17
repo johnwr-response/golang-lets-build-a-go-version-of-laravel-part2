@@ -62,6 +62,11 @@ func (h *Handlers) ListFs(w http.ResponseWriter, r *http.Request) {
 			f := h.App.Filesystems["SFTP"].(sFtpFilesystem.SFTP)
 			fs = &f
 			fsType = "SFTP"
+		case "WEBDAV":
+			log.Println("Using WEBDAV for fsType")
+			f := h.App.Filesystems["WEBDAV"].(webdavFilesystem.WebDAV)
+			fs = &f
+			fsType = "WEBDAV"
 		}
 
 		if fs != nil {
@@ -116,6 +121,13 @@ func (h *Handlers) PostUploadToFS(w http.ResponseWriter, r *http.Request) {
 		}
 	case "SFTP":
 		fs := h.App.Filesystems["SFTP"].(sFtpFilesystem.SFTP)
+		err := fs.Put(filename, "")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	case "WEBDAV":
+		fs := h.App.Filesystems["WEBDAV"].(webdavFilesystem.WebDAV)
 		err := fs.Put(filename, "")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
