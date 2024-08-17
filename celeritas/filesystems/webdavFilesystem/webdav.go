@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/studio-b12/gowebdav"
 	"github.com/tsawler/celeritas/filesystems"
+	"io"
 	"os"
 	"path"
 	"strings"
@@ -84,5 +85,40 @@ func (w *WebDAV) Delete(itemsToDelete []string) bool {
 
 // Get pulls a file from the remote file system and saves it somewhere on our server
 func (w *WebDAV) Get(destination string, items ...string) error {
+	client := w.getCredentials()
+
+	for _, item := range items {
+		err := func() error {
+			webdavFilepath := item
+			localFilepath := fmt.Sprintf("%s/%s", destination, path.Base(item))
+
+			reader, err := client.ReadStream(webdavFilepath)
+			if err != nil {
+				return err
+			}
+			defer func(reader io.ReadCloser) {
+				_ = reader.Close()
+			}(reader)
+
+			file, err := os.Create(localFilepath)
+			if err != nil {
+				return err
+			}
+			defer func(file *os.File) {
+				_ = file.Close()
+			}(file)
+
+			_, err = io.Copy(file, reader)
+			if err != nil {
+				return err
+			}
+
+			return nil
+		}()
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
