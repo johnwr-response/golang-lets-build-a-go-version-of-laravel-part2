@@ -7,6 +7,7 @@ import (
 	"github.com/tsawler/celeritas/filesystems"
 	"github.com/tsawler/celeritas/filesystems/minioFilesystem"
 	"github.com/tsawler/celeritas/filesystems/sFtpFilesystem"
+	"github.com/tsawler/celeritas/filesystems/webdavFilesystem"
 	"io"
 	"log"
 	"mime/multipart"
@@ -174,6 +175,9 @@ func (h *Handlers) DeleteFromFS(w http.ResponseWriter, r *http.Request) {
 		fs = &f
 	case "SFTP":
 		f := h.App.Filesystems["SFTP"].(sFtpFilesystem.SFTP)
+		fs = &f
+	case "WEBDAV":
+		f := h.App.Filesystems["WEBDAV"].(webdavFilesystem.WebDAV)
 		fs = &f
 	}
 

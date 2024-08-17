@@ -180,6 +180,7 @@
   cd ..
   ```
 ### Implementing the List function for WebDAV
+### Implementing the Delete function for WebDAV
 
 
 
