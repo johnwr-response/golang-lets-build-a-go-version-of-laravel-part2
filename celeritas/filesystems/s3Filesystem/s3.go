@@ -167,5 +167,37 @@ func (s *S3) Delete(itemsToDelete []string) bool {
 
 // Get pulls a file from the remote file system and saves it somewhere on our server
 func (s *S3) Get(destination string, items ...string) error {
+	cred := s.getCredentials()
+	sess := session.Must(session.NewSession(&aws.Config{
+		Endpoint:    &s.Endpoint,
+		Region:      &s.Region,
+		Credentials: cred,
+	}))
+
+	for _, item := range items {
+		err := func() error {
+			file, err := os.Create(fmt.Sprintf("%s/%s", destination, item))
+			if err != nil {
+				return err
+			}
+			defer func(file *os.File) {
+				_ = file.Close()
+			}(file)
+
+			downloader := s3manager.NewDownloader(sess)
+			_, err = downloader.Download(file, &s3.GetObjectInput{
+				Bucket: aws.String(s.Bucket),
+				Key:    aws.String(item),
+			})
+			if err != nil {
+				return err
+			}
+			return nil
+		}()
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }

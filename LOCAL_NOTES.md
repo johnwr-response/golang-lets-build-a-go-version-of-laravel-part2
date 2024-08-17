@@ -195,6 +195,7 @@
   ```
 ### Implementing the Put function for S3 file systems
 ### Implementing the Delete function for S3 file systems
+### Implementing the Get function for S3 buckets
 
 
 
