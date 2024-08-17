@@ -112,6 +112,21 @@ func (s *SFTP) List(prefix string) ([]filesystems.Listing, error) {
 
 // Delete removes one or more files from the remote filesystem
 func (s *SFTP) Delete(itemsToDelete []string) bool {
+	client, err := s.getCredentials()
+	if err != nil {
+		return false
+	}
+	defer func(client *sftp.Client) {
+		_ = client.Close()
+	}(client)
+
+	for _, item := range itemsToDelete {
+		deleteErr := client.Remove(item)
+		if deleteErr != nil {
+			return false
+		}
+	}
+
 	return true
 }
 

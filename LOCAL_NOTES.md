@@ -155,6 +155,7 @@
   cd ..
   ```
 ### Implementing the List function for sFTP
+### Implementing the Delete function for sFTP
 
 
 
