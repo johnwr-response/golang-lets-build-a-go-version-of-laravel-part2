@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"strings"
 )
 
 type SFTP struct {
@@ -79,6 +80,33 @@ func (s *SFTP) Put(fileName, folder string) error {
 // List returns a listing of all files in the remote bucket with the given prefix, except for files named with a leading .
 func (s *SFTP) List(prefix string) ([]filesystems.Listing, error) {
 	var listing []filesystems.Listing
+	client, err := s.getCredentials()
+	if err != nil {
+		return listing, err
+	}
+	defer func(client *sftp.Client) {
+		_ = client.Close()
+	}(client)
+
+	files, err := client.ReadDir(prefix)
+	if err != nil {
+		return listing, err
+	}
+	for _, f := range files {
+		var item filesystems.Listing
+
+		if !strings.HasPrefix(f.Name(), ".") {
+			b := float64(f.Size())
+			kb := b / 1024
+			mb := kb / 1024
+			item.Key = f.Name()
+			item.Size = mb
+			item.LastModified = f.ModTime()
+			item.IsDir = f.IsDir()
+			listing = append(listing, item)
+		}
+	}
+
 	return listing, nil
 }
 
