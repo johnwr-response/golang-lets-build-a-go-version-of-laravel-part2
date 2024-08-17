@@ -184,12 +184,20 @@
 ### Implementing the Get function for WebDAV
 ### Testing things out
 
-
-
-
-
-
 ## File systems: Amazon S3 Buckets
+### Implementing the List function for S3 file systems
+- AWS SDK for Go - AWS SDK for the Go programming language.
+  [GitHub](https://github.com/aws/aws-sdk-go)
+  ```shell
+  cd celeritas
+  go get github.com/aws/aws-sdk-go/aws
+  cd ..
+  ```
+
+
+
+
+
 ## Building a File System Agnostic File Uploader
 ## Improving our Migrations package
 ## Social Authentication with OAuth2
