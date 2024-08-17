@@ -132,5 +132,54 @@ func (s *SFTP) Delete(itemsToDelete []string) bool {
 
 // Get pulls a file from the remote file system and saves it somewhere on our server
 func (s *SFTP) Get(destination string, items ...string) error {
+	client, err := s.getCredentials()
+	if err != nil {
+		return err
+	}
+	defer func(client *sftp.Client) {
+		_ = client.Close()
+	}(client)
+
+	for _, item := range items {
+		// create a destination file
+		dstFile, err := os.Create(fmt.Sprintf("%s/%s", destination, path.Base(item)))
+		if err != nil {
+			return err
+		}
+		// Wrapped the defer statement in a IIFE (Immediately Invoked Function Expression).
+		// This ensures, that the object will now be closed and there will not be a memory leak.
+		// There was no real leak here. However, defer statements inside loops *can* cause leaks, specifically in
+		// cases where the call's arguments are pointers whose pointed-to values are being updated on each iteration.
+		func() {
+			defer func(dstFile *os.File) {
+				_ = dstFile.Close()
+			}(dstFile)
+		}()
+
+		// open source file
+		srcFile, err := client.Open(item)
+		if err != nil {
+			return err
+		}
+		func() {
+			defer func(srcFile *sftp.File) {
+				_ = srcFile.Close()
+			}(srcFile)
+		}()
+
+		// copy source to destination
+		bytes, err := io.Copy(dstFile, srcFile)
+		if err != nil {
+			return err
+		}
+		log.Println(fmt.Sprintf("%d bytes copied", bytes))
+
+		// flush the in-memory copy
+		err = dstFile.Sync()
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }

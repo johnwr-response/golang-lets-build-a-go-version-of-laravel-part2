@@ -156,6 +156,12 @@
   ```
 ### Implementing the List function for sFTP
 ### Implementing the Delete function for sFTP
+### Implementing the Get function for sFTP
+- SIDENOTE:
+  - Defer statements inside loops *can* cause leaks, specifically in cases where the call's arguments are pointers
+    whose pointed-to values are being updated on each iteration. There was no real leak here, but wrapped the defer
+    statement in an IIFE (Immediately Invoked Function Expression) nevertheless. This ensures that the object will now
+    be closed and there will not be a memory leak.
 
 
 
