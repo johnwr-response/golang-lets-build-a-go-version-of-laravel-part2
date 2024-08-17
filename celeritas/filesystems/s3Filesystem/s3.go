@@ -1,6 +1,7 @@
 package s3Filesystem
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
@@ -8,7 +9,11 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/tsawler/celeritas/filesystems"
+	"net/http"
+	"os"
+	"path"
 )
 
 type S3 struct {
@@ -27,6 +32,51 @@ func (s *S3) getCredentials() *credentials.Credentials {
 
 // Put transfers a file to the remote file system
 func (s *S3) Put(fileName, folder string) error {
+	cred := s.getCredentials()
+	sess := session.Must(session.NewSession(&aws.Config{
+		Endpoint:    &s.Endpoint,
+		Region:      &s.Region,
+		Credentials: cred,
+	}))
+
+	uploader := s3manager.NewUploader(sess)
+
+	f, err := os.Open(fileName)
+	if err != nil {
+		return err
+	}
+	defer func(f *os.File) {
+		_ = f.Close()
+	}(f)
+
+	fileInfo, err := f.Stat()
+	if err != nil {
+		return err
+	}
+	var size = fileInfo.Size()
+
+	buffer := make([]byte, size)
+	_, err = f.Read(buffer)
+	if err != nil {
+		return err
+	}
+	fileBytes := bytes.NewReader(buffer)
+	fileType := http.DetectContentType(buffer)
+
+	_, err = uploader.Upload(&s3manager.UploadInput{
+		Bucket:      aws.String(s.Bucket),
+		Key:         aws.String(fmt.Sprintf("%s/%s", folder, path.Base(fileName))),
+		Body:        fileBytes,
+		ACL:         aws.String("public-read"),
+		ContentType: aws.String(fileType),
+		Metadata: map[string]*string{
+			"key": aws.String("MetadataValue"),
+		},
+	})
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
