@@ -167,6 +167,8 @@
 - SIDENOTE: Fixed bug in `make restart`
 ### Updating our PostUploadToFS handler to support sFTP
 ### Updating our DeleteFromFS handler to support sFTP
+### Cleaning up the Get function to avoid resource leaks
+- SIDENOTE: Clean up the handling of defer statements in loop
 
 
 
