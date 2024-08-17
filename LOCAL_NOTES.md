@@ -166,6 +166,7 @@
 ### Updating our ListFS handler to support sFTP
 - SIDENOTE: Fixed bug in `make restart`
 ### Updating our PostUploadToFS handler to support sFTP
+### Updating our DeleteFromFS handler to support sFTP
 
 
 
