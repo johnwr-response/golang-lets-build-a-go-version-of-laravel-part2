@@ -83,6 +83,11 @@ func (s *S3) Put(fileName, folder string) error {
 // List returns a listing of all files in the remote bucket with the given prefix, except for files named with a leading .
 func (s *S3) List(prefix string) ([]filesystems.Listing, error) {
 	var listing []filesystems.Listing
+
+	if prefix == "/" {
+		prefix = ""
+	}
+
 	cred := s.getCredentials()
 	sess := session.Must(session.NewSession(&aws.Config{
 		Endpoint:    &s.Endpoint,

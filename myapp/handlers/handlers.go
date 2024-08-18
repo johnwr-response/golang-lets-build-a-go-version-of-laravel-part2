@@ -51,7 +51,8 @@ func (h *Handlers) ListFs(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if fsType != "" {
+	_, fsTypeExists := h.App.Filesystems[fsType]
+	if fsTypeExists {
 		switch fsType {
 		case "MINIO":
 			log.Println("Using MINIO for fsType")
@@ -83,7 +84,8 @@ func (h *Handlers) ListFs(w http.ResponseWriter, r *http.Request) {
 			}
 			list = l
 		}
-
+	} else {
+		log.Println(fmt.Sprintf("Filesystem %s not enabled", fsType))
 	}
 
 	vars := make(jet.VarMap)
