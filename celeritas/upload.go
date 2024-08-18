@@ -37,7 +37,7 @@ func (c *Celeritas) UploadFile(r *http.Request, destination, field string, fs fi
 }
 
 func (c *Celeritas) getFileToUpload(r *http.Request, fieldName string) (string, error) {
-	_ = r.ParseMultipartForm(10 << 20)
+	_ = r.ParseMultipartForm(c.config.uploads.maxUploadSize)
 
 	file, header, err := r.FormFile(fieldName)
 	if err != nil {
@@ -57,15 +57,7 @@ func (c *Celeritas) getFileToUpload(r *http.Request, fieldName string) (string, 
 	if err != nil {
 		return "", err
 	}
-
-	validMimeTypes := []string{
-		"image/gif",
-		"image/jpeg",
-		"image/png",
-		"application/pdf",
-	}
-
-	if !inSlice(validMimeTypes, mimeType.String()) {
+	if !inSlice(c.config.uploads.allowedMimeTypes, mimeType.String()) {
 		return "", fmt.Errorf("invalid file mime type: %s", mimeType.String())
 	}
 

@@ -75,6 +75,12 @@ type config struct {
 	sessionType string
 	database    databaseConfig
 	redis       redisConfig
+	uploads     uploadConfig
+}
+
+type uploadConfig struct {
+	allowedMimeTypes []string
+	maxUploadSize    int64
 }
 
 // New reads the .env file, creates our application config, populates the Celeritas type with settings
@@ -147,6 +153,20 @@ func (c *Celeritas) New(rootPath string) error {
 	c.Mail = c.createMailer()
 	c.Routes = c.routes().(*chi.Mux)
 
+	// file uploads
+	exploded := strings.Split(os.Getenv("ALLOWED_FILETYPES"), ",")
+	var mimeTypes []string
+	for _, mt := range exploded {
+		mimeTypes = append(mimeTypes, strings.TrimSpace(mt))
+	}
+
+	var maxUploadSize int64
+	if maxSize, err := strconv.Atoi(os.Getenv("MAX_UPLOAD_SIZE")); err != nil {
+		maxUploadSize = 10 << 20
+	} else {
+		maxUploadSize = int64(maxSize)
+	}
+
 	c.config = config{
 		port:     os.Getenv("PORT"),
 		renderer: os.Getenv("RENDERER"),
@@ -166,6 +186,10 @@ func (c *Celeritas) New(rootPath string) error {
 			host:     os.Getenv("REDIS_HOST"),
 			password: os.Getenv("REDIS_PASSWORD"),
 			prefix:   os.Getenv("REDIS_PREFIX"),
+		},
+		uploads: uploadConfig{
+			maxUploadSize:    maxUploadSize,
+			allowedMimeTypes: mimeTypes,
 		},
 	}
 

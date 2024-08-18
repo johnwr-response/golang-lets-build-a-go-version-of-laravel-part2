@@ -240,6 +240,7 @@
   go get github.com/gabriel-vasile/mimetype
   cd ..
   ```
+### Adding the mime type and file size limitations to the Celeritas config type
 
 
 
