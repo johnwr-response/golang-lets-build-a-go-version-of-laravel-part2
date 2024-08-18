@@ -223,11 +223,14 @@
 ### Trying things out
 - SIDENOTE: Actual S3 is never tested. Added a check if chosen filesystem is enabled to avoid error
 
-
-
-
-
 ## Building a File System Agnostic File Uploader
+### What we'll build
+
+
+
+
+
+
 ## Improving our Migrations package
 ## Social Authentication with OAuth2
 ## RPC, Graceful Shutdown, and additional changes

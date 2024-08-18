@@ -27,6 +27,11 @@ type Handlers struct {
 // Home is the handler to render the home page
 func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {
 	err := h.render(w, r, "home", nil, nil)
+
+	//err := h.App.UploadFile(r, "uploaded-file", h.App.Minio)
+	//if err != nil {
+	//}
+
 	if err != nil {
 		h.App.ErrorLog.Println("error rendering:", err)
 	}
