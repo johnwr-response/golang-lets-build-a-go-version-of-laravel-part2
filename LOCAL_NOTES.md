@@ -241,6 +241,13 @@
   cd ..
   ```
 ### Adding the mime type and file size limitations to the Celeritas config type
+### Setting up handlers and routes to try things out
+- SIDENOTE: Used Minio instead of S3
+- SIDENOTE2: Also had to run `go mod tidy` on `myapp`
+- Create files and folders
+  ```shell
+  ni myapp/views/celeritas-upload.jet -type file
+  ```
 
 
 

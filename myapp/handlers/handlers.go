@@ -27,14 +27,27 @@ type Handlers struct {
 // Home is the handler to render the home page
 func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {
 	err := h.render(w, r, "home", nil, nil)
-
-	//err := h.App.UploadFile(r, "uploaded-file", h.App.Minio)
-	//if err != nil {
-	//}
-
 	if err != nil {
 		h.App.ErrorLog.Println("error rendering:", err)
 	}
+}
+
+func (h *Handlers) CeleritasUpload(w http.ResponseWriter, r *http.Request) {
+	err := h.render(w, r, "celeritas-upload", nil, nil)
+	if err != nil {
+		h.App.ErrorLog.Println("error rendering:", err)
+	}
+}
+
+func (h *Handlers) PostCeleritasUpload(w http.ResponseWriter, r *http.Request) {
+	err := h.App.UploadFile(r, "", "formFile", &h.App.Minio)
+	if err != nil {
+		h.App.ErrorLog.Println("error uploading file:", err)
+		h.App.Session.Put(r.Context(), "error", err.Error())
+	} else {
+		h.App.Session.Put(r.Context(), "flash", "Uploaded!")
+	}
+	http.Redirect(w, r, "/upload", http.StatusSeeOther)
 }
 
 func (h *Handlers) ListFs(w http.ResponseWriter, r *http.Request) {
