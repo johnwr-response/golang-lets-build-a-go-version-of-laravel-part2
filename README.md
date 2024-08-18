@@ -75,5 +75,5 @@ the things listed above, but also a reusable code base that will help you jump s
     [link](https://github.com/studio-b12/gowebdav)
   - Uses the AWS SDK for Go to support Amazon S3 Buckets
     [link](https://github.com/aws/aws-sdk-go)
-    - Transiently added packages in `go.mod`
-      - `github.com/kr/fs`
+  - Uses the Mimetype package for Go to support mimetype detection
+    [link](https://github.com/gabriel-vasile/mimetype)

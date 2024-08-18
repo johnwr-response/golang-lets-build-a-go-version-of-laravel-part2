@@ -2,6 +2,7 @@ package celeritas
 
 import (
 	"fmt"
+	"github.com/gabriel-vasile/mimetype"
 	"github.com/tsawler/celeritas/filesystems"
 	"io"
 	"mime/multipart"
@@ -46,6 +47,28 @@ func (c *Celeritas) getFileToUpload(r *http.Request, fieldName string) (string, 
 		_ = file.Close()
 	}(file)
 
+	// Looks at the first ~500 bytes to try to figure out the correct mimetype
+	mimeType, err := mimetype.DetectReader(file)
+	if err != nil {
+		return "", err
+	}
+	// Return to start of file after mimetype check
+	_, err = file.Seek(0, 0)
+	if err != nil {
+		return "", err
+	}
+
+	validMimeTypes := []string{
+		"image/gif",
+		"image/jpeg",
+		"image/png",
+		"application/pdf",
+	}
+
+	if !inSlice(validMimeTypes, mimeType.String()) {
+		return "", fmt.Errorf("invalid file mime type: %s", mimeType.String())
+	}
+
 	dst, err := os.Create(fmt.Sprintf("./tmp/%s", header.Filename))
 	if err != nil {
 		return "", err
@@ -60,4 +83,13 @@ func (c *Celeritas) getFileToUpload(r *http.Request, fieldName string) (string, 
 	}
 
 	return fmt.Sprintf("./tmp/%s", header.Filename), nil
+}
+
+func inSlice(slice []string, value string) bool {
+	for _, item := range slice {
+		if item == value {
+			return true
+		}
+	}
+	return false
 }

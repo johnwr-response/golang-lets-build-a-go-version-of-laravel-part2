@@ -231,6 +231,15 @@
   ```shell
   ni celeritas/upload.go -type file -Value "package celeritas`n`n"
   ```
+### Limiting upload by mime type
+- List of commonly used mimetypes: [Common MIME types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
+- Mimetype - A fast Golang library for media type and file extension detection, based on magic numbers
+  [GitHub](https://github.com/gabriel-vasile/mimetype)
+  ```shell
+  cd celeritas
+  go get github.com/gabriel-vasile/mimetype
+  cd ..
+  ```
 
 
 
