@@ -250,12 +250,21 @@
   ```
 ### Trying things out
 
-
-
-
-
-
 ## Improving our Migrations package
+### Pop vs. SQL
+- [Soda CLI](https://gobuffalo.io/documentation/database/soda/)
+- Build and copy cli
+  ```shell
+  cd celeritas
+  make build_cli
+  cp dist/celeritas.exe ../myapp/.
+  .\celeritas.exe
+  #  .\celeritas.exe make migration test
+  ```
+
+
+
+
 ## Social Authentication with OAuth2
 ## RPC, Graceful Shutdown, and additional changes
 ## Testing
