@@ -226,6 +226,11 @@
 ## Building a File System Agnostic File Uploader
 ### What we'll build
 ### Adding file systems to the Celeritas type
+### Creating the file uploader
+- Create files and folders
+  ```shell
+  ni celeritas/upload.go -type file -Value "package celeritas`n`n"
+  ```
 
 
 
