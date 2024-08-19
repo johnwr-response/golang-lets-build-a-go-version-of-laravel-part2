@@ -435,9 +435,9 @@
 ### Adding and running a sample test
 - Create files and folders
   ```shell
-  ni celeritas/handlers_test.go -type file -Value "package celeritas`n`n"
+  ni myapp/handlers/handlers_test.go -type file -Value "package celeritas`n`n"
   ```
-- NOTE: `myapp/handlers_test/handlers_test.go` already existed
+- NOTE: `myapp/handlers/handlers_test.go` already existed
 - Run tests in `myapp` folder: `go test ./handlers/...`
 ### Adding some additional tests
 ### Implementing Laravel Dusk like screen captures
@@ -450,6 +450,12 @@
     go get github.com/go-rod/rod
     cd ..
     ```
+### Writing the screen capture function
+- Create files and folders
+  ```shell
+  ni celeritas/dusk.go -type file -Value "package celeritas`n`n"
+  md myapp/screenshots
+  ```
 
 
 
