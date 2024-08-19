@@ -385,6 +385,7 @@
   cd ..
   ```
 ### Adding the case for logging out of Google in socialLogout()
+### Trying things out
 
 
 
