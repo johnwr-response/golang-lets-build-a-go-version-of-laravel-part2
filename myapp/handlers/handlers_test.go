@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"net/http"
 	"net/http/httptest"
 	"testing"
 )
@@ -28,4 +29,24 @@ func TestHome(t *testing.T) {
 	//	cel.TakeScreenShot(ts.URL+"/", "HomeTest", 1500, 1000)
 	//	t.Error("did not find submarine")
 	//}
+}
+
+func TestHome2(t *testing.T) {
+	req, _ := http.NewRequest("GET", "/", nil)
+	ctx := getCtx(req)
+	req = req.WithContext(ctx)
+
+	rr := httptest.NewRecorder()
+	cel.Session.Put(ctx, "test_key", "Hello, world.")
+
+	h := http.HandlerFunc(testHandlers.Home)
+	h.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusOK {
+		t.Errorf("for home page, expected status %d but got %d", http.StatusOK, rr.Code)
+	}
+
+	if cel.Session.GetString(ctx, "test_key") != "Hello, world." {
+		t.Error("did not get correct value from session")
+	}
 }

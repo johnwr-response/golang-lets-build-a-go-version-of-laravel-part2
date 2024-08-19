@@ -75,7 +75,6 @@ func getRoutes() http.Handler {
 	return mux
 }
 
-//goland:noinspection GoUnusedFunction
 func getCtx(req *http.Request) context.Context {
 	ctx, err := testSession.Load(req.Context(), req.Header.Get("X-Session"))
 	if err != nil {
