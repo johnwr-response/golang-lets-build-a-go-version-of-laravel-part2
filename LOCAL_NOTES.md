@@ -374,6 +374,16 @@
   - Application Type: `Web application`
   - Name: `Celeritas client 1`
 ### Updating the auth-handlers.go file for Google to enable login
+### Trying out login with Google
+- SIDENOTE: Constantly got the error
+  ` ambiguous import: found package cloud.google.com/go/compute/metadata in multiple modules`
+- Had to run the following
+  ```shell
+  cd myapp
+  go get cloud.google.com/go
+  go mod tidy
+  cd ..
+  ```
 
 
 
