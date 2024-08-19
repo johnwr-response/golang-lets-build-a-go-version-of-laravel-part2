@@ -423,10 +423,20 @@
   ```
 - NOTE: Functions in myapp/main.go already existed
 
-
-
-
 ## Testing
+### Adding a simple setup_test.go file to handlers
+- Create files and folders
+  ```shell
+  ni myapp/handlers/setup_test.go -type file -Value "package handlers`n`n"
+  ```
+- NOTE: The Test Setup File in myapp/handlers already existed with the package variables and the TestMain function
+
+
+
+
+
+
+
 ## Final changes to the Celeritas CLI application
 
 ## Repo creation Log
