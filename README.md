@@ -118,3 +118,5 @@ the things listed above, but also a reusable code base that will help you jump s
       - `golang.org/x/oauth2`
       - `google.golang.org/appengine`
       - `google.golang.org/protobuf`
+  - Uses the Rod package for web automation and scraping
+    [link](https://github.com/go-rod/rod)

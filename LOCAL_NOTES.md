@@ -440,6 +440,16 @@
 - NOTE: `myapp/handlers_test/handlers_test.go` already existed
 - Run tests in `myapp` folder: `go test ./handlers/...`
 ### Adding some additional tests
+### Implementing Laravel Dusk like screen captures
+- [Laravel Dusk documentation](https://laravel.com/docs/8.x/dusk)
+- [Rod documentation](https://go-rod.github.io/#/)
+  - Rod: A Chrome DevTools Protocol driver for web automation and scraping.
+    [GitHub](https://github.com/go-rod/rod)
+    ```shell
+    cd celeritas
+    go get github.com/go-rod/rod
+    cd ..
+    ```
 
 
 
