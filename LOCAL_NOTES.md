@@ -261,6 +261,15 @@
   .\celeritas.exe
   #  .\celeritas.exe make migration test
   ```
+### Getting started with Pop functions for our migrations code in Celeritas
+- Pop - It wraps the absolutely amazing https://github.com/jmoiron/sqlx library, cleans up some of the common
+  patterns and workflows usually associated with dealing with databases in Go.
+  [GitHub](https://github.com/gobuffalo/pop)
+  ```shell
+  cd celeritas
+  go get github.com/gobuffalo/pop
+  cd ..
+  ```
 
 
 

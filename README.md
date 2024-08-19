@@ -77,3 +77,37 @@ the things listed above, but also a reusable code base that will help you jump s
     [link](https://github.com/aws/aws-sdk-go)
   - Uses the Mimetype package for Go to support mimetype detection
     [link](https://github.com/gabriel-vasile/mimetype)
+  - Uses the Pop package for Go to uniformly deal with databases
+    [link](https://github.com/gobuffalo/pop)
+    - Transiently added packages in `go.mod`
+      - `github.com/gobuffalo/envy`
+      - `github.com/gobuffalo/fizz`
+      - `github.com/gobuffalo/flect`
+      - `github.com/gobuffalo/genny`
+      - `github.com/gobuffalo/github_flavored_markdown`
+      - `github.com/gobuffalo/helpers`
+      - `github.com/gobuffalo/logger`
+      - `github.com/gobuffalo/nulls`
+      - `github.com/gobuffalo/packd`
+      - `github.com/gobuffalo/plush/v4`
+      - `github.com/gobuffalo/tags/v3`
+      - `github.com/gobuffalo/validate`
+      - `github.com/gobuffalo/validate/v3`
+      - `github.com/go-sql-driver/mysql`
+      - `github.com/joho/godotenv`
+      - `github.com/Masterminds/semver/v3`
+      - `github.com/aymerick/douceur`
+      - `github.com/cockroachdb/cockroach-go`
+      - `github.com/fatih/structs`
+      - `github.com/gofrs/uuid`
+      - `github.com/jmoiron/sqlx`
+      - `github.com/kballard/go-shellquote`
+      - `github.com/mattn/go-sqlite3`
+      - `github.com/microcosm-cc/bluemonday`
+      - `github.com/rogpeppe/go-internal`
+      - `github.com/sergi/go-diff`
+      - `github.com/sourcegraph/annotate`
+      - `github.com/sourcegraph/syntaxhighlight`
+      - `golang.org/x/sync`
+      - `golang.org/x/term`
+      - `gopkg.in/yaml.v2`

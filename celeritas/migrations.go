@@ -1,6 +1,7 @@
 package celeritas
 
 import (
+	"github.com/gobuffalo/pop"
 	"log"
 
 	"github.com/golang-migrate/migrate/v4"
@@ -11,12 +12,27 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
+func (c *Celeritas) popConnect() (*pop.Connection, error) {
+	tx, err := pop.Connect("development")
+	if err != nil {
+		return nil, err
+	}
+	return tx, nil
+}
+
+// Leaving the methods using golang-migrate here as a reference
+
 func (c *Celeritas) MigrateUp(dsn string) error {
 	m, err := migrate.New("file://"+c.RootPath+"/migrations", dsn)
 	if err != nil {
 		return err
 	}
-	defer m.Close()
+	defer func(m *migrate.Migrate) {
+		err, _ := m.Close()
+		if err != nil {
+
+		}
+	}(m)
 
 	if err := m.Up(); err != nil {
 		log.Println("Error running migration:", err)
@@ -30,7 +46,12 @@ func (c *Celeritas) MigrateDownAll(dsn string) error {
 	if err != nil {
 		return err
 	}
-	defer m.Close()
+	defer func(m *migrate.Migrate) {
+		err, _ := m.Close()
+		if err != nil {
+
+		}
+	}(m)
 
 	if err := m.Down(); err != nil {
 		return err
@@ -44,7 +65,12 @@ func (c *Celeritas) Steps(n int, dsn string) error {
 	if err != nil {
 		return err
 	}
-	defer m.Close()
+	defer func(m *migrate.Migrate) {
+		err, _ := m.Close()
+		if err != nil {
+
+		}
+	}(m)
 
 	if err := m.Steps(n); err != nil {
 		return err
@@ -58,7 +84,12 @@ func (c *Celeritas) MigrateForce(dsn string) error {
 	if err != nil {
 		return err
 	}
-	defer m.Close()
+	defer func(m *migrate.Migrate) {
+		err, _ := m.Close()
+		if err != nil {
+
+		}
+	}(m)
 
 	if err := m.Force(-1); err != nil {
 		return err
