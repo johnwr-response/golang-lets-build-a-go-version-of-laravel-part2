@@ -295,6 +295,7 @@
   .\celeritas.exe make migration test3 fizz
   ```
 ### Ensuring the database is connected before allowing people to make migrations
+### Creating a database.yml file and running migrations
 
 
 
