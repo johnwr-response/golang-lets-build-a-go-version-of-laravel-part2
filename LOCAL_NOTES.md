@@ -280,6 +280,20 @@
   ni celeritas/cmd/cli/templates/migrations/migration_up.fizz -type file
   ni celeritas/cmd/cli/templates/migrations/migration_down.fizz -type file
   ```
+### Trying out our new make migration command
+- Build and copy cli
+  ```shell
+  cd celeritas
+  make build
+  cp dist/celeritas.exe ../myapp/.
+  ```
+- Run cli to test
+  ```shell
+  cd myapp
+  .\celeritas.exe make migration test
+  .\celeritas.exe make migration test2 sql
+  .\celeritas.exe make migration test3 fizz
+  ```
 
 
 
