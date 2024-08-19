@@ -270,6 +270,7 @@
   go get github.com/gobuffalo/pop
   cd ..
   ```
+### Implementing the CreatePopMigration() function to create up and down migrations
 
 
 

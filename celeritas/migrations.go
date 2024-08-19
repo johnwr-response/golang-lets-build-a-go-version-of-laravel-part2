@@ -20,6 +20,15 @@ func (c *Celeritas) popConnect() (*pop.Connection, error) {
 	return tx, nil
 }
 
+func (c *Celeritas) CreatePopMigration(up, down []byte, migrationName, migrationType string) error {
+	var migrationPath = c.RootPath + "/migrations"
+	err := pop.MigrationCreate(migrationPath, migrationName, migrationType, up, down)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // Leaving the methods using golang-migrate here as a reference
 
 func (c *Celeritas) MigrateUp(dsn string) error {
