@@ -398,6 +398,11 @@
   ```shell
   ni myapp/public/maintenance.html -type file
   ```
+### Updating the CLI for maintenance mode
+- Create files and folders
+  ```shell
+  ni celeritas/cmd/cli/rpc.go -type file -Value "package main`n`n"
+  ```
 
 
 

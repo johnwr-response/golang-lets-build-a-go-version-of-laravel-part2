@@ -28,6 +28,7 @@ func setup(arg1, _ string) {
 	}
 }
 
+//goland:noinspection GoUnusedFunction
 func getDSN() string {
 	dbType := cel.DB.DataType
 
@@ -73,6 +74,8 @@ func showHelp() {
 	color.Yellow(`Available commands:
 
 	help                           - show the help commands
+    down                           - put the server into maintenance mode
+    up                             - take the server out of maintenance mode
 	version                        - print application version
 	migrate                        - runs all up migrations that have not been run previously
 	migrate down                   - reverses the most recent migration
