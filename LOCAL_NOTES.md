@@ -271,6 +271,7 @@
   cd ..
   ```
 ### Implementing the CreatePopMigration() function to create up and down migrations
+### Implementing the RunPopMigrations() function
 
 
 
