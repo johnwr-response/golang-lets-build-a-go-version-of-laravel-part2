@@ -322,6 +322,8 @@ func (h *Handlers) SocialMediaCallback(w http.ResponseWriter, r *http.Request) {
 		// we don't hava a user, so add one
 		var newUser data.User
 		if provider == "github" {
+			// TODO: This logic will not work for people with more than one first name
+			// TODO: Handle if user does not have a name associated with the social account. Will enter an empty name
 			exploded := strings.Split(gUser.Name, " ")
 			newUser.FirstName = exploded[0]
 			if len(exploded) > 1 {
@@ -334,9 +336,7 @@ func (h *Handlers) SocialMediaCallback(w http.ResponseWriter, r *http.Request) {
 		// NOTE: This is to provide support for decoupling the local account from the social login account, thus
 		// enabling recovery of the local app account even if the social login account is deleted.
 		// This way the forgot-my-password functionality will do just that.
-
-		// Why is this not added? Will not be found by testUser below if not?!?
-		// newUser.Email = gUser.Email
+		newUser.Email = gUser.Email
 		newUser.CreatedAt = time.Now()
 		newUser.UpdatedAt = time.Now()
 		_, err := newUser.Insert(newUser)

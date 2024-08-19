@@ -357,6 +357,9 @@
 - Store your new client ID into `GITHUB_KEY` in your `.env` file
 - Generate and store your new secret into `GITHUB_SECRET` in your `.env` file
 - Store your callback URL into `GITHUB_CALLBACK` in your `.env` file
+### Trying out the GitHub login functionality
+- SIDENOTE: Had to run `go mod tidy`
+- `make restart`
 
 
 
