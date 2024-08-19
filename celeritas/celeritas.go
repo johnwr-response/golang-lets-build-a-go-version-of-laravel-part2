@@ -8,7 +8,9 @@ import (
 	"github.com/tsawler/celeritas/filesystems/sFtpFilesystem"
 	"github.com/tsawler/celeritas/filesystems/webdavFilesystem"
 	"log"
+	"net"
 	"net/http"
+	"net/rpc"
 	"os"
 	"strconv"
 	"strings"
@@ -33,6 +35,9 @@ var myRedisCache *cache.RedisCache
 var myBadgerCache *cache.BadgerCache
 var redisPool *redis.Pool
 var badgerConn *badger.DB
+
+//goland:noinspection GoUnusedGlobalVariable
+var maintenanceMode bool
 
 // Celeritas is the overall type for the Celeritas package. Members that are exported in this type
 // are available to any application that uses it.
@@ -469,4 +474,42 @@ func (c *Celeritas) createFilesystems() map[string]interface{} {
 	}
 
 	return filesystems
+}
+
+type RPCServer struct{}
+
+func (r *RPCServer) MaintenanceMode(inMaintenanceMode bool, resp *string) error {
+	if inMaintenanceMode {
+		maintenanceMode = true
+		*resp = "Server in maintenance mode"
+	} else {
+		maintenanceMode = false
+		*resp = "Server live!"
+	}
+	return nil
+}
+
+func (c *Celeritas) listenRPC() {
+	// if nothing is specified for rpc_port, don't start
+	if os.Getenv("RPC_PORT") != "" {
+		c.InfoLog.Println("Listening on RPC port:", os.Getenv("RPC_PORT"))
+		err := rpc.Register(new(RPCServer))
+		if err != nil {
+			c.ErrorLog.Println("Failed to register RPC server:", err)
+			return
+		}
+		listen, err := net.Listen("tcp", "127.0.0.1:"+os.Getenv("RPC_PORT"))
+		if err != nil {
+			c.ErrorLog.Println("Failed to listen:", err)
+			return
+		}
+		for {
+			rpcConn, err := listen.Accept()
+			if err != nil {
+				c.ErrorLog.Println("Failed to accept RPC connection:", err)
+				continue
+			}
+			go rpc.ServeConn(rpcConn)
+		}
+	}
 }
