@@ -430,6 +430,8 @@
   ni myapp/handlers/setup_test.go -type file -Value "package handlers`n`n"
   ```
 - NOTE: The Test Setup File in myapp/handlers already existed with the package variables and the TestMain function
+### Adding two functions to our setup_test.go file
+- NOTE: The Test Setup File in myapp/handlers already existed with a partly getRoutes and a full getCtx functions
 
 
 
