@@ -392,6 +392,12 @@
 - SIDENOTE: This was already implemented...
 ### Getting started with "Maintenance Mode" functionality using RPC
 ### Starting RPC
+### Adding maintenance mode middleware
+- SIDENOTE: This file already existed...
+- Create files and folders
+  ```shell
+  ni myapp/public/maintenance.html -type file
+  ```
 
 
 

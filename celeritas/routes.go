@@ -17,6 +17,7 @@ func (c *Celeritas) routes() http.Handler {
 	mux.Use(middleware.Recoverer)
 	mux.Use(c.SessionLoad)
 	mux.Use(c.NoSurf)
+	mux.Use(c.CheckForMaintenanceMode)
 
 	return mux
 }
@@ -26,7 +27,7 @@ func (c *Celeritas) routes() http.Handler {
 func Routes() http.Handler {
 	r := chi.NewRouter()
 	r.Get("/test-c", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("it works!"))
+		_, _ = w.Write([]byte("it works!"))
 	})
 	return r
 }

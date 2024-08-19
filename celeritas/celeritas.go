@@ -36,7 +36,6 @@ var myBadgerCache *cache.BadgerCache
 var redisPool *redis.Pool
 var badgerConn *badger.DB
 
-//goland:noinspection GoUnusedGlobalVariable
 var maintenanceMode bool
 
 // Celeritas is the overall type for the Celeritas package. Members that are exported in this type
@@ -265,6 +264,7 @@ func (c *Celeritas) Init(p initPaths) error {
 
 // ListenAndServe starts the web server
 func (c *Celeritas) ListenAndServe() {
+	//maintenanceMode = true
 	srv := &http.Server{
 		Addr:         fmt.Sprintf("%s:%s", os.Getenv("HOST_INTERFACE"), os.Getenv("PORT")),
 		ErrorLog:     c.ErrorLog,
