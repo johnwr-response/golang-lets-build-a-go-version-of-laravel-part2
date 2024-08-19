@@ -346,6 +346,17 @@
 ### Implementing the SocialLogin handler
 ### Implementing the SocialCallback handler
 ### Connecting our social authentication handlers to routes
+### Setting up GitHub for social authentication
+- Log in to GitHub
+- Go to `Settings` in your profile
+- Go to `Developer settings` and then `OAuth Apps`
+- Click `Register a new application`
+  - Application : `celeritas-oauth`
+  - Homepage URL : `http://localhost:4000`
+  - Authorization callback URL: `http://localhost:4000/auth/github/callback`
+- Store your new client ID into `GITHUB_KEY` in your `.env` file
+- Generate and store your new secret into `GITHUB_SECRET` in your `.env` file
+- Store your callback URL into `GITHUB_CALLBACK` in your `.env` file
 
 
 
