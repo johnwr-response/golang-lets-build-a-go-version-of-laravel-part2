@@ -338,6 +338,9 @@
   cd ..
   ```
 ### Getting started with Goth and Social Authentication
+### Setting up authentication routes
+- NOTE: This includes two commits. The first one with all the files added by the previously run command 
+  `celeritas make auth` is not building successfully. This is by purpose.
 
 
 
