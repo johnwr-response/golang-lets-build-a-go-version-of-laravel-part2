@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 	"time"
 
@@ -12,7 +12,7 @@ import (
 	"github.com/iancoleman/strcase"
 )
 
-func doMake(arg2, arg3 string) error {
+func doMake(arg2, arg3, arg4 string) error {
 
 	switch arg2 {
 	case "key":
@@ -20,6 +20,33 @@ func doMake(arg2, arg3 string) error {
 		color.Yellow("32 character encryption key: %s", rnd)
 
 	case "migration":
+		// TODO - make sure db is set up
+		//dbType := cel.DB.DataType
+		if arg3 == "" {
+			exitGracefully(errors.New("you must give the migration a name"))
+		}
+
+		// default to migration type of fizz
+		migrationType := "fizz"
+		var up, down string
+
+		// are we doing fizz or sql
+		if arg4 == "fizz" || arg4 == "" {
+			upBytes, _ := templateFS.ReadFile("templates/migrations/migration_up.fizz")
+			downBytes, _ := templateFS.ReadFile("templates/migrations/migration_down.fizz")
+			up = string(upBytes)
+			down = string(downBytes)
+		} else {
+			migrationType = "sql"
+		}
+
+		// create the migrations for either fizz or sql
+		err := cel.CreatePopMigration([]byte(up), []byte(down), arg3, migrationType)
+		if err != nil {
+			exitGracefully(err)
+		}
+
+	case "migration_old":
 		dbType := cel.DB.DataType
 		if arg3 == "" {
 			exitGracefully(errors.New("you must give the migration a name"))
@@ -62,9 +89,10 @@ func doMake(arg2, arg3 string) error {
 		}
 
 		handler := string(data)
+		//goland:noinspection SpellCheckingInspection
 		handler = strings.ReplaceAll(handler, "$HANDLERNAME$", strcase.ToCamel(arg3))
 
-		err = ioutil.WriteFile(fileName, []byte(handler), 0644)
+		err = os.WriteFile(fileName, []byte(handler), 0644)
 		if err != nil {
 			exitGracefully(err)
 		}
@@ -81,16 +109,16 @@ func doMake(arg2, arg3 string) error {
 
 		model := string(data)
 
-		plur := pluralize.NewClient()
+		plural := pluralize.NewClient()
 
 		var modelName = arg3
 		var tableName = arg3
 
-		if plur.IsPlural(arg3) {
-			modelName = plur.Singular(arg3)
+		if plural.IsPlural(arg3) {
+			modelName = plural.Singular(arg3)
 			tableName = strings.ToLower(tableName)
 		} else {
-			tableName = strings.ToLower(plur.Plural(arg3))
+			tableName = strings.ToLower(plural.Plural(arg3))
 		}
 
 		fileName := cel.RootPath + "/data/" + strings.ToLower(modelName) + ".go"
@@ -98,7 +126,9 @@ func doMake(arg2, arg3 string) error {
 			exitGracefully(errors.New(fileName + " already exists!"))
 		}
 
+		//goland:noinspection SpellCheckingInspection
 		model = strings.ReplaceAll(model, "$MODELNAME$", strcase.ToCamel(modelName))
+		//goland:noinspection SpellCheckingInspection
 		model = strings.ReplaceAll(model, "$TABLENAME$", tableName)
 
 		err = copyDataToFile([]byte(model), fileName)

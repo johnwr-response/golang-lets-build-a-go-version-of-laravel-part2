@@ -274,6 +274,12 @@
 ### Implementing the RunPopMigrations() function
 ### Implementing the PopMigrateDown() function
 ### Implementing the PopMigrateReset() function
+### Making changes in the Celeritas CLI for our pop migrations
+- Create files and folders
+  ```shell
+  ni celeritas/cmd/cli/templates/migrations/migration_up.fizz -type file
+  ni celeritas/cmd/cli/templates/migrations/migration_down.fizz -type file
+  ```
 
 
 
