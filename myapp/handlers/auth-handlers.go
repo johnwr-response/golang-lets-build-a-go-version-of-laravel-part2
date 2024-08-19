@@ -352,6 +352,7 @@ func (h *Handlers) SocialMediaCallback(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.App.Session.Put(r.Context(), "userID", testUser.ID)
+	h.App.Session.Put(r.Context(), "social_token", gUser.AccessToken)
 	h.App.Session.Put(r.Context(), "social_email", gUser.Email)
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)

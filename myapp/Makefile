@@ -43,7 +43,7 @@ run_fg:
 	@echo ---
 	@echo ################################################################################
 	@echo Running ${APP_NAME} in foreground...
-	@start /min cmd /c .\dist\${BINARY_NAME}
+	@.\dist\${BINARY_NAME}
 	@echo ################################################################################
 
 ## test: run all tests
