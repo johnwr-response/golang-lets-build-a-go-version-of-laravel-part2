@@ -373,6 +373,7 @@
   - You need to Configure a Consent Screen first, specify Public and follow the wizard
   - Application Type: `Web application`
   - Name: `Celeritas client 1`
+### Updating the auth-handlers.go file for Google to enable login
 
 
 
