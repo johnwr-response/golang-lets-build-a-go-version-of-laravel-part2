@@ -432,6 +432,13 @@
 - NOTE: The Test Setup File in myapp/handlers already existed with the package variables and the TestMain function
 ### Adding two functions to our setup_test.go file
 - NOTE: The Test Setup File in myapp/handlers already existed with a partly getRoutes and a full getCtx functions
+### Adding and running a sample test
+- Create files and folders
+  ```shell
+  ni celeritas/handlers_test.go -type file -Value "package celeritas`n`n"
+  ```
+- NOTE: `myapp/handlers_test/handlers_test.go` already existed
+- Run tests in `myapp` folder: `go test ./handlers/...`
 
 
 
