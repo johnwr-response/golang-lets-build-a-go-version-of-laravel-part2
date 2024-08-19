@@ -342,6 +342,7 @@
 - NOTE: This includes two commits. The first one with all the files added by the previously run command 
   `celeritas make auth` is not building successfully. This is by purpose to illustrate what was missing in the
   `celeritas make auth` command. This second commit holds the changes needed to fix this. Also adds a `login` route.
+### Initializing social sign on
 
 
 

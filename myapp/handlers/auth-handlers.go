@@ -4,8 +4,13 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"github.com/gorilla/sessions"
+	"github.com/markbates/goth"
+	"github.com/markbates/goth/gothic"
+	"github.com/markbates/goth/providers/github"
 	"myapp/data"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/CloudyKit/jet/v6"
@@ -25,7 +30,7 @@ func (h *Handlers) UserLogin(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) PostUserLogin(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		_, _ = w.Write([]byte(err.Error()))
 		return
 	}
 
@@ -34,32 +39,32 @@ func (h *Handlers) PostUserLogin(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.Models.Users.GetByEmail(email)
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		_, _ = w.Write([]byte(err.Error()))
 		return
 	}
 
 	matches, err := user.PasswordMatches(password)
 	if err != nil {
-		w.Write([]byte("Error validating password"))
+		_, _ = w.Write([]byte("Error validating password"))
 		return
 	}
 
 	if !matches {
-		w.Write([]byte("Invalid password!"))
+		_, _ = w.Write([]byte("Invalid password!"))
 		return
 	}
 
 	// did the user check remember me?
 	if r.Form.Get("remember") == "remember" {
 		randomString := h.randomString(12)
-		hasher := sha256.New()
-		_, err := hasher.Write([]byte(randomString))
+		hash := sha256.New()
+		_, err := hash.Write([]byte(randomString))
 		if err != nil {
 			h.App.ErrorStatus(w, http.StatusBadRequest)
 			return
 		}
 
-		sha := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
+		sha := base64.URLEncoding.EncodeToString(hash.Sum(nil))
 		rm := data.RememberToken{}
 		err = rm.InsertToken(user.ID, sha)
 		if err != nil {
@@ -114,11 +119,11 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, &newCookie)
 
-	h.App.Session.RenewToken(r.Context())
+	_ = h.App.Session.RenewToken(r.Context())
 	h.App.Session.Remove(r.Context(), "userID")
 	h.App.Session.Remove(r.Context(), "remember_token")
-	h.App.Session.Destroy(r.Context())
-	h.App.Session.RenewToken(r.Context())
+	_ = h.App.Session.Destroy(r.Context())
+	_ = h.App.Session.RenewToken(r.Context())
 
 	http.Redirect(w, r, "/users/login", http.StatusSeeOther)
 }
@@ -144,7 +149,7 @@ func (h *Handlers) PostForgot(w http.ResponseWriter, r *http.Request) {
 	// verify that supplied email exists
 	var u *data.User
 	email := r.Form.Get("email")
-	u, err = u.GetByEmail(email)
+	u, err = h.Models.Users.GetByEmail(email)
 	if err != nil {
 		h.App.ErrorStatus(w, http.StatusBadRequest)
 		return
@@ -162,16 +167,16 @@ func (h *Handlers) PostForgot(w http.ResponseWriter, r *http.Request) {
 	h.App.InfoLog.Println("Signed link is", signedLink)
 
 	// email the message
-	var data struct {
+	var myData struct {
 		Link string
 	}
-	data.Link = signedLink
+	myData.Link = signedLink
 
 	msg := mailer.Message{
 		To:       u.Email,
 		Subject:  "Password reset",
 		Template: "password-reset",
-		Data:     data,
+		Data:     myData,
 		From:     "admin@example.com",
 	}
 
@@ -258,4 +263,24 @@ func (h *Handlers) PostResetPassword(w http.ResponseWriter, r *http.Request) {
 	// redirect
 	h.App.Session.Put(r.Context(), "flash", "Password reset. You can now log in.")
 	http.Redirect(w, r, "/users/login", http.StatusSeeOther)
+}
+
+func (h *Handlers) InitSocialAuth() {
+	ghScope := []string{"user"}
+	// gScope
+
+	goth.UseProviders(
+		github.New(os.Getenv("GITHUB_KEY"), os.Getenv("GITHUB_SECRET"), os.Getenv("GITHUB_CALLBACK"), ghScope...),
+	)
+
+	// This session only needs to exist for the duration of this login procedure
+	key := os.Getenv("KEY")
+	maxAge := 86400 * 30
+	st := sessions.NewCookieStore([]byte(key))
+	st.MaxAge(maxAge)
+	st.Options.Path = "/"
+	st.Options.HttpOnly = true
+	st.Options.Secure = false
+
+	gothic.Store = st
 }
