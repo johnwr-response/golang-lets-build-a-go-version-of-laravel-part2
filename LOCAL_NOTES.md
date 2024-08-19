@@ -345,7 +345,7 @@
 ### Initializing social sign on
 ### Implementing the SocialLogin handler
 ### Implementing the SocialCallback handler
-
+### Connecting our social authentication handlers to routes
 
 
 
