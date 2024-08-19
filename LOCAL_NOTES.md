@@ -360,6 +360,7 @@
 ### Trying out the GitHub login functionality
 - SIDENOTE: Had to run `go mod tidy`
 - `make restart`
+### Logging out
 
 
 

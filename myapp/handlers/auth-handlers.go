@@ -108,6 +108,11 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 		_ = rt.Delete(h.App.Session.GetString(r.Context(), "remember_token"))
 	}
 
+	err := gothic.Logout(w, r)
+	if err != nil {
+		h.App.ErrorLog.Println(err)
+	}
+
 	// delete cookie
 	newCookie := http.Cookie{
 		Name:     fmt.Sprintf("_%s_remember", h.App.AppName),
