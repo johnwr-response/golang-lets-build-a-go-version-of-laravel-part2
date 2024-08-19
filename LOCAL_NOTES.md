@@ -387,14 +387,14 @@
 ### Adding the case for logging out of Google in socialLogout()
 ### Trying things out
 
-
-
-
-
-
-
-
 ## RPC, Graceful Shutdown, and additional changes
+### Separating Web and API routes
+- SIDENOTE: This was already implemented...
+
+
+
+
+
 ## Testing
 ## Final changes to the Celeritas CLI application
 

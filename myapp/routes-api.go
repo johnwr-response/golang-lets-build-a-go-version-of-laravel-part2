@@ -15,7 +15,7 @@ func (a *application) ApiRoutes() http.Handler {
 				Content string `json:"content"`
 			}
 			payload.Content = "Hello, world"
-			a.App.WriteJSON(w, http.StatusOK, payload)
+			_ = a.App.WriteJSON(w, http.StatusOK, payload)
 		})
 	})
 
