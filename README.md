@@ -111,3 +111,10 @@ the things listed above, but also a reusable code base that will help you jump s
       - `golang.org/x/sync`
       - `golang.org/x/term`
       - `gopkg.in/yaml.v2`
+  - Uses the Goth package to uniformly deal with Multi-Provider Authentications
+    [link](https://github.com/markbates/goth)
+    - Transiently added packages in `go.mod`
+      - `github.com/golang/protobuf`
+      - `golang.org/x/oauth2`
+      - `google.golang.org/appengine`
+      - `google.golang.org/protobuf`

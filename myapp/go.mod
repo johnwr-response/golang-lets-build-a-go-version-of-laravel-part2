@@ -34,7 +34,7 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.14.1 // indirect
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
-	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.3 // indirect
 	github.com/gomodule/redigo v1.8.5 // indirect
 	github.com/google/flatbuffers v1.12.0 // indirect
@@ -60,6 +60,7 @@ require (
 	github.com/kr/fs v0.1.0 // indirect
 	github.com/lib/pq v1.10.4 // indirect
 	github.com/mailgun/mailgun-go/v4 v4.5.3 // indirect
+	github.com/markbates/goth v1.80.0 // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
 	github.com/minio/minio-go/v7 v7.0.75 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
@@ -77,9 +78,11 @@ require (
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/crypto v0.25.0 // indirect
 	golang.org/x/net v0.27.0 // indirect
+	golang.org/x/oauth2 v0.17.0 // indirect
 	golang.org/x/sys v0.22.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
-	google.golang.org/protobuf v1.26.0 // indirect
+	google.golang.org/appengine v1.6.8 // indirect
+	google.golang.org/protobuf v1.32.0 // indirect
 )
 
 replace github.com/tsawler/celeritas v0.0.0 => ../celeritas
