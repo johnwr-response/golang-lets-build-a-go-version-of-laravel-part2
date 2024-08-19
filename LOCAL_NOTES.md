@@ -344,6 +344,7 @@
   `celeritas make auth` command. This second commit holds the changes needed to fix this. Also adds a `login` route.
 ### Initializing social sign on
 ### Implementing the SocialLogin handler
+### Implementing the SocialCallback handler
 
 
 

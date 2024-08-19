@@ -9,9 +9,11 @@ import (
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
 	"github.com/markbates/goth/providers/github"
+	"log"
 	"myapp/data"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/CloudyKit/jet/v6"
@@ -300,6 +302,53 @@ func (h *Handlers) SocialLogin(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *Handlers) SocialMediaCallback(_ http.ResponseWriter, _ *http.Request) {
+func (h *Handlers) SocialMediaCallback(w http.ResponseWriter, r *http.Request) {
+	h.InitSocialAuth()
+	gUser, err := gothic.CompleteUserAuth(w, r)
+	if err != nil {
+		h.App.Session.Put(r.Context(), "error", err.Error())
+		http.Redirect(w, r, "/users/login", http.StatusSeeOther)
+		return
+	}
 
+	// look up user using email address
+	var u data.User
+	var testUser *data.User
+
+	testUser, err = u.GetByEmail(gUser.Email)
+	if err != nil {
+		log.Println(err)
+		provider := h.App.Session.Get(r.Context(), "social_provider").(string)
+		// we don't hava a user, so add one
+		var newUser data.User
+		if provider == "github" {
+			exploded := strings.Split(gUser.Name, " ")
+			newUser.FirstName = exploded[0]
+			if len(exploded) > 1 {
+				newUser.LastName = exploded[1]
+			}
+		} else {
+
+		}
+		newUser.Active = 1
+		// NOTE: This is to provide support for decoupling the local account from the social login account, thus
+		// enabling recovery of the local app account even if the social login account is deleted.
+		// This way the forgot-my-password functionality will do just that.
+
+		// Why is this not added? Will not be found by testUser below if not?!?
+		// newUser.Email = gUser.Email
+		newUser.CreatedAt = time.Now()
+		newUser.UpdatedAt = time.Now()
+		_, err := newUser.Insert(newUser)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		testUser, _ = u.GetByEmail(gUser.Email)
+	}
+
+	h.App.Session.Put(r.Context(), "userID", testUser.ID)
+	h.App.Session.Put(r.Context(), "social_email", gUser.Email)
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
