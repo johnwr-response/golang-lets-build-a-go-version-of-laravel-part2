@@ -461,8 +461,18 @@
 - SIDENOTE: Had to run `go mod tidy`
 - SIDENOTE2: Could not test this as it was flagged by Windows Security as suspicious. So commented out... 
   `Operation did not complete successfully because the file contains a virus or potentially unwanted software.`
-
-
+  Seems to be connected to something down the chain calling `Leakless(true)` https://github.com/ysmood/leakless
+### Writing additional helper functions for testing
+- Create files and folders
+  ```shell
+  ni myapp/views/tester.jet -type file
+  ```
+- SIDENOTE: Could not test this as it was flagged by Windows Security as suspicious. So commented out...
+  `Operation did not complete successfully because the file contains a virus or potentially unwanted software.`
+  - Solution 1: Disable `leakless` by creating your own *Launcher and set its `leakless` property to false.
+    [](https://pkg.go.dev/github.com/go-rod/rod@v0.79.0/lib/launcher#Launcher.Leakless)
+  - Solution 2: Tell your antivirus to ignore the `leakless` binary.
+- TODO: Investigate above options
 
 
 

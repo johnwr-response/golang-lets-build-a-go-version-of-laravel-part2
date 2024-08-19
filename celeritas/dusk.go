@@ -29,3 +29,15 @@ func (c *Celeritas) TakeScreenShot(pageURL, testName string, w, h float64) {
 	filename := time.Now().Format("2006-01-02-15-04-05.000000")
 	_ = utils.OutputFile(fmt.Sprintf("%s/screenshots/%s-%s.png", c.RootPath, testName, filename), img)
 }
+
+func (c *Celeritas) FetchPage(pageURL string) *rod.Page {
+	return rod.New().
+		MustConnect().
+		MustIgnoreCertErrors(true).
+		MustPage(pageURL).
+		MustWaitLoad()
+}
+
+func (c *Celeritas) SelectElementByID(page *rod.Page, id string) *rod.Element {
+	return page.MustElementByJS(fmt.Sprintf("document.getElementByID('%s')", id))
+}

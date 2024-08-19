@@ -238,3 +238,9 @@ func (h *Handlers) DeleteFromFS(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, fmt.Sprintf("/list-fs?fs-type=%s&curPath=%s", fsType, curPath), http.StatusSeeOther)
 }
+func (h *Handlers) Clicker(w http.ResponseWriter, r *http.Request) {
+	err := h.render(w, r, "tester", nil, nil)
+	if err != nil {
+		h.App.ErrorLog.Println("error rendering:", err)
+	}
+}

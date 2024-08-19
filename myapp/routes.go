@@ -13,6 +13,7 @@ func (a *application) routes() *chi.Mux {
 
 	// add routes here
 	a.get("/", a.Handlers.Home)
+	a.get("/tester", a.Handlers.Clicker)
 
 	a.get("/users/login", a.Handlers.UserLogin)
 	a.post("/users/login", a.Handlers.PostUserLogin)

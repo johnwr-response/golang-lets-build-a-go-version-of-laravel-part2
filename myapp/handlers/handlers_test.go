@@ -25,9 +25,33 @@ func TestHome(t *testing.T) {
 	//if err != nil {
 	//	t.Fatal(err)
 	//}
-	//if !strings.Contains(string(bodyText), "submarine") {
+	//if !strings.Contains(string(bodyText), "awesome") {
 	//	cel.TakeScreenShot(ts.URL+"/", "HomeTest", 1500, 1000)
-	//	t.Error("did not find submarine")
+	//	t.Error("did not find awesome")
+	//}
+}
+
+func TestClicker(t *testing.T) {
+	// Could not test any of this as calls to any functions in `dusk.go` are flagged by Windows Security as suspicious.
+	// `Operation did not complete successfully because the file contains a virus or potentially unwanted software.`
+
+	//routes := getRoutes()
+	//ts := httptest.NewTLSServer(routes)
+	//defer ts.Close()
+
+	//page := cel.FetchPage(ts.URL + "/tester")
+	//outputElement := cel.SelectElementByID(page, "output")
+	//button := cel.SelectElementByID(page, "clicker")
+
+	//testHTML, _ := outputElement.HTML()
+	//if strings.Contains(testHTML, "Clicked the button") {
+	//	t.Errorf("found text that should not be there ")
+	//}
+
+	//button.MustClick()
+	//testHTML, _ = outputElement.HTML()
+	//if !strings.Contains(testHTML, "Clicked the button") {
+	//	t.Errorf("did not find text that should be there ")
 	//}
 }
 
