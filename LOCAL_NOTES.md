@@ -403,7 +403,19 @@
   ```shell
   ni celeritas/cmd/cli/rpc.go -type file -Value "package main`n`n"
   ```
-
+### Testing the maintenance mode functionality
+- Build and copy cli
+  ```shell
+  cd celeritas
+  make build_cli
+  ```
+- Run cli to test
+  ```shell
+  cd myapp
+  .\celeritas.exe down
+  .\celeritas.exe up
+  ```
+- Note: Functionality for `ALLOWED_URLS` in `.env` file is not implemented, but could be
 
 
 

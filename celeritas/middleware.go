@@ -33,6 +33,7 @@ func (c *Celeritas) NoSurf(next http.Handler) http.Handler {
 func (c *Celeritas) CheckForMaintenanceMode(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if maintenanceMode {
+			// `ALLOWED_URLS` in `.enc` could have been read in here to enable that functionality
 			if !strings.Contains(r.URL.Path, "/public/maintenance.html") {
 				w.WriteHeader(http.StatusServiceUnavailable)
 				w.Header().Set("Retry-After:", "300")
