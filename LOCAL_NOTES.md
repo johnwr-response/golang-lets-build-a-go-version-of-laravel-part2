@@ -315,6 +315,17 @@
   .\celeritas.exe migrate reset
   ```
 ### Updating the "make auth" command for our Pop integration
+### Trying out make auth
+- Build and copy cli
+  ```shell
+  cd celeritas
+  make build_cli
+  ```
+- Run cli to test
+  ```shell
+  cd myapp
+  .\celeritas.exe make auth
+  ```
 
 
 
