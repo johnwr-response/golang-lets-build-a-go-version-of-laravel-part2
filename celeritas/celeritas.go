@@ -292,6 +292,8 @@ func (c *Celeritas) ListenAndServe() {
 		}(badgerConn)
 	}
 
+	go c.listenRPC()
+
 	c.InfoLog.Printf("Listening on port %s", os.Getenv("PORT"))
 	err := srv.ListenAndServe()
 	c.ErrorLog.Fatal(err)
