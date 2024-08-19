@@ -329,6 +329,7 @@
 
 ## Social Authentication with OAuth2
 ### Social Authentication or Single Sign On: an Overview
+- [Social login](https://en.wikipedia.org/w/index.php?title=Social_login&oldid=1037502496)
 - Goth: Multi-Provider Authentication for Go - Package goth provides a simple, clean, and idiomatic way to write authentication packages for Go web applications.
   [GitHub](https://github.com/markbates/goth)
   ```shell
@@ -336,10 +337,14 @@
   go get github.com/markbates/goth
   cd ..
   ```
+### Getting started with Goth and Social Authentication
 
 
-https://en.wikipedia.org/w/index.php?title=Social_login&oldid=1037502496
-https://github.com/markbates/goth
+
+
+
+
+
 
 
 ## RPC, Graceful Shutdown, and additional changes
