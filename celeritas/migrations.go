@@ -42,6 +42,23 @@ func (c *Celeritas) RunPopMigrations(tx *pop.Connection) error {
 	return nil
 }
 
+func (c *Celeritas) PopMigrateDown(tx *pop.Connection, steps ...int) error {
+	var migrationPath = c.RootPath + "/migrations"
+	step := 1
+	if len(steps) > 0 {
+		step = steps[0]
+	}
+	fm, err := pop.NewFileMigrator(migrationPath, tx)
+	if err != nil {
+		return err
+	}
+	err = fm.Down(step)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // Leaving the methods using golang-migrate here as a reference
 
 func (c *Celeritas) MigrateUp(dsn string) error {
