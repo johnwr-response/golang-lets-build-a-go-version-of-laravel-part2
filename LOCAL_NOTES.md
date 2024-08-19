@@ -296,6 +296,24 @@
   ```
 ### Ensuring the database is connected before allowing people to make migrations
 ### Creating a database.yml file and running migrations
+### Trying out the migrate command
+- First make sure the database is empty
+  `drop table if exists users cascade; drop table if exists tokens cascade; drop table if exists remember_tokens; drop table if exists schema_migrations;`
+- Build and copy cli
+  ```shell
+  cd celeritas
+  make build
+  cp dist/celeritas.exe ../myapp/.
+  ```
+- Run cli to test
+  ```shell
+  cd myapp
+  .\celeritas.exe make migration test
+  .\celeritas.exe migrate
+  .\celeritas.exe migrate down
+  .\celeritas.exe migrate
+  .\celeritas.exe migrate reset
+  ```
 
 
 
