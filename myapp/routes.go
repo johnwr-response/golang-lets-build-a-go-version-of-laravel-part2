@@ -14,6 +14,9 @@ func (a *application) routes() *chi.Mux {
 	// add routes here
 	a.get("/", a.Handlers.Home)
 
+	a.get("/users/login", a.Handlers.UserLogin)
+	a.post("/users/login", a.Handlers.PostUserLogin)
+
 	a.get("/upload", a.Handlers.CeleritasUpload)
 	a.post("/upload", a.Handlers.PostCeleritasUpload)
 

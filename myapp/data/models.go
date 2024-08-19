@@ -10,6 +10,7 @@ import (
 	"github.com/upper/db/v4/adapter/postgresql"
 )
 
+//goland:noinspection GoUnusedGlobalVariable
 var db *sql.DB
 var upper db2.Session
 
@@ -17,7 +18,9 @@ var upper db2.Session
 type Models struct {
 	// any models inserted here (and in the New function)
 	// are easily accessible throughout the entire application
-
+	RememberToken RememberToken
+	Tokens        Token
+	Users         User
 }
 
 // New initializes the models package for use
@@ -33,7 +36,11 @@ func New(databasePool *sql.DB) Models {
 		// do nothing
 	}
 
-	return Models{}
+	return Models{
+		RememberToken: RememberToken{},
+		Users:         User{},
+		Tokens:        Token{},
+	}
 }
 
 // getInsertID returns the integer value of a newly inserted id (using upper)
