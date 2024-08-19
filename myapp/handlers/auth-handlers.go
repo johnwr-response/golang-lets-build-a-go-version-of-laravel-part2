@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"github.com/go-chi/chi/v5"
 	"github.com/gorilla/sessions"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
@@ -283,4 +284,22 @@ func (h *Handlers) InitSocialAuth() {
 	st.Options.Secure = false
 
 	gothic.Store = st
+}
+
+func (h *Handlers) SocialLogin(w http.ResponseWriter, r *http.Request) {
+	provider := chi.URLParam(r, "provider")
+	h.App.Session.Put(r.Context(), "social_provider", provider)
+	h.InitSocialAuth()
+
+	if _, err := gothic.CompleteUserAuth(w, r); err == nil {
+		// user is already logged in
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	} else {
+		// attempt social login
+		gothic.BeginAuthHandler(w, r)
+	}
+}
+
+func (h *Handlers) SocialMediaCallback(_ http.ResponseWriter, _ *http.Request) {
+
 }
