@@ -361,6 +361,8 @@
 - SIDENOTE: Had to run `go mod tidy`
 - `make restart`
 ### Logging out
+### Really logging out
+- [Authorizing OAuth apps](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps)
 
 
 

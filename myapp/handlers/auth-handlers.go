@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/gorilla/sessions"
@@ -108,10 +110,7 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 		_ = rt.Delete(h.App.Session.GetString(r.Context(), "remember_token"))
 	}
 
-	err := gothic.Logout(w, r)
-	if err != nil {
-		h.App.ErrorLog.Println(err)
-	}
+	h.socialLogout(w, r)
 
 	// delete cookie
 	newCookie := http.Cookie{
@@ -356,4 +355,45 @@ func (h *Handlers) SocialMediaCallback(w http.ResponseWriter, r *http.Request) {
 	h.App.Session.Put(r.Context(), "social_email", gUser.Email)
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func (h *Handlers) socialLogout(_ http.ResponseWriter, r *http.Request) {
+	provider, ok := h.App.Session.Get(r.Context(), "social_provider").(string)
+	if !ok {
+		return
+	}
+
+	// Call the appropriate api for our provider and revoke the auth token.
+	// Each provider has different logic for doing this (if it exists at all)
+
+	switch provider {
+	case "github":
+		clientID := os.Getenv("GITHUB_KEY")
+		clientSecret := os.Getenv("GITHUB_SECRET")
+
+		token := h.App.Session.Get(r.Context(), "social_token").(string)
+
+		var payload struct {
+			AccessToken string `json:"access_token"`
+		}
+		payload.AccessToken = token
+
+		jsonRequest, _ := json.Marshal(payload)
+		req, err := http.NewRequest(http.MethodDelete,
+			fmt.Sprintf("https://%s:%s@api.github.com/applications/%s/grant", clientID, clientSecret, clientID),
+			bytes.NewBuffer(jsonRequest))
+		if err != nil {
+			h.App.ErrorLog.Println(err)
+			return
+		}
+
+		client := &http.Client{}
+		_, err = client.Do(req)
+		if err != nil {
+			h.App.ErrorLog.Println("Error logging out of Github", err)
+			return
+		}
+	case "google":
+
+	}
 }
