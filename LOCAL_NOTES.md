@@ -364,6 +364,15 @@
 ### Really logging out
 - [Authorizing OAuth apps](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps)
 ### Trying the socialLogout function
+### Adding support for Google login
+- Log in to ``Google Cloud Platform``
+- Go to `Dashboard`, currently under `Cloud overview` in navigation menu
+- Create and select a project
+- Find (or search for) the `OAuth consent screen`
+- Go to Credentials and create a `OAuth 2.0 Client ID`
+  - You need to Configure a Consent Screen first, specify Public and follow the wizard
+  - Application Type: `Web application`
+  - Name: `Celeritas client 1`
 
 
 
