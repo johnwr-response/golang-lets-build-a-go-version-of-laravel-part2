@@ -416,6 +416,12 @@
   .\celeritas.exe up
   ```
 - Note: Functionality for `ALLOWED_URLS` in `.env` file is not implemented, but could be
+### Graceful Shutdown
+- Create files and folders
+  ```shell
+  ni celeritas/server.go -type file -Value "package celeritas`n`n"
+  ```
+- NOTE: Functions in myapp/main.go already existed
 
 
 
