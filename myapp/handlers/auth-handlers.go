@@ -394,10 +394,15 @@ func (h *Handlers) socialLogout(_ http.ResponseWriter, r *http.Request) {
 		client := &http.Client{}
 		_, err = client.Do(req)
 		if err != nil {
-			h.App.ErrorLog.Println("Error logging out of Github", err)
+			h.App.ErrorLog.Println("Error logging out of Github:", err)
 			return
 		}
 	case "google":
+		token := h.App.Session.Get(r.Context(), "social_token").(string)
+		_, err := http.PostForm(fmt.Sprintf("https://accounts.google.com/0/oauth2/revoke=%s", token), nil)
+		if err != nil {
+			h.App.ErrorLog.Println("Error logging out of Google:", err)
+		}
 
 	}
 }

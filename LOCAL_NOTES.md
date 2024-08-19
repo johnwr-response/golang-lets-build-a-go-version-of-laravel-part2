@@ -384,6 +384,7 @@
   go mod tidy
   cd ..
   ```
+### Adding the case for logging out of Google in socialLogout()
 
 
 
