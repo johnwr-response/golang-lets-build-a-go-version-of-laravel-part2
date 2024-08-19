@@ -314,6 +314,7 @@
   .\celeritas.exe migrate
   .\celeritas.exe migrate reset
   ```
+### Updating the "make auth" command for our Pop integration
 
 
 
