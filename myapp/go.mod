@@ -38,6 +38,7 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.5 // indirect
 	github.com/go-ini/ini v1.67.0 // indirect
+	github.com/go-rod/rod v0.116.2 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/gobuffalo/envy v1.10.2 // indirect
 	github.com/gobuffalo/fizz v1.14.4 // indirect
@@ -112,6 +113,11 @@ require (
 	github.com/vanng822/css v1.0.1 // indirect
 	github.com/vanng822/go-premailer v1.20.1 // indirect
 	github.com/xhit/go-simple-mail/v2 v2.10.0 // indirect
+	github.com/ysmood/fetchup v0.2.3 // indirect
+	github.com/ysmood/goob v0.4.0 // indirect
+	github.com/ysmood/got v0.40.0 // indirect
+	github.com/ysmood/gson v0.7.3 // indirect
+	github.com/ysmood/leakless v0.9.0 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/mod v0.17.0 // indirect
 	golang.org/x/net v0.27.0 // indirect

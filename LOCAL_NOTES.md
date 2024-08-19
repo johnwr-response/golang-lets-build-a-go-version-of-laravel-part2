@@ -456,6 +456,11 @@
   ni celeritas/dusk.go -type file -Value "package celeritas`n`n"
   md myapp/screenshots
   ```
+### Trying out the screen capture function
+- NOTE: This was already added in `myapp/handlers/handlers_test.go`
+- SIDENOTE: Had to run `go mod tidy`
+- SIDENOTE2: Could not test this as it was flagged by Windows Security as suspicious. So commented out... 
+  `Operation did not complete successfully because the file contains a virus or potentially unwanted software.`
 
 
 
