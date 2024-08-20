@@ -493,14 +493,33 @@
   ./celeritas.exe new testapp4
   ```
 - Open new app
-- run `go mod tidy`
+- run `make build`
 - run `make start`
-- SIDENOTE: Also had to close all goland processes but one and run `go clean cache` and `go clean -modcache`
+- SIDENOTE:
+    Sometimes has to close other goland processes and run `go clean cache`, `go clean -modcache` and `go mod tidy`
 
-
-
-
-
+### Trying things out
+- run `make stop`
+- Populate `./config/database.yml` 
+- Populate information in `.env`
+  - `database_*`
+  - `cache` 
+- Run `make restart`
+- Run `../celeritas.exe help`
+- Run `../celeritas.exe down`
+- Run `../celeritas.exe up`
+  - Run `../celeritas.exe make auth`
+- Replace `myapp/data` with `testapp4/data` in imports of `handlers/auth-handlers.go` and `middleware/remember.go`
+- Try `go mod tidy`, if errors try one or both of the following
+  - if error is `ambiguous import: found package cloud.google.com/go/compute/metadata in multiple modules:`
+    - then run `go get cloud.google.com/go/compute/metadata` and then `go mod tidy` again
+  - else close all but one goland process and run `go clean -modcache` and then `go mod tidy`
+- Add `RememberToken`, `Users` and `Tokens` in `Models` struct in `./data/models.go`
+- Add auth routes in `routes.go`
+- Run `make build`
+- Run `make restart`
+- Check `http://localhost:4000/users/login`
+  - Note, user table is empty and neither `GitHub` nor `Google` variables are set in `.env` file so actual login won't work
 
 ## Repo creation Log
 - git init
