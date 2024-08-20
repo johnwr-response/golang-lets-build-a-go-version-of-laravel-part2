@@ -476,6 +476,7 @@
 
 ## Final changes to the Celeritas CLI application
 ### Updating our templates in the CLI, and making some changes to the myapp
+### Creating our skeleton app
 
 
 

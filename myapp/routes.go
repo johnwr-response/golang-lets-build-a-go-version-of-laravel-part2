@@ -13,24 +13,6 @@ func (a *application) routes() *chi.Mux {
 
 	// add routes here
 	a.get("/", a.Handlers.Home)
-	a.get("/tester", a.Handlers.Clicker)
-
-	a.get("/users/login", a.Handlers.UserLogin)
-	a.post("/users/login", a.Handlers.PostUserLogin)
-	a.get("/users/logout", a.Handlers.Logout)
-
-	a.get("/auth/{provider}", a.Handlers.SocialLogin)
-	a.get("/auth/{provider}/callback", a.Handlers.SocialMediaCallback)
-
-	a.get("/upload", a.Handlers.CeleritasUpload)
-	a.post("/upload", a.Handlers.PostCeleritasUpload)
-
-	a.get("/list-fs", a.Handlers.ListFs)
-
-	a.get("/files/upload", a.Handlers.UploadToFS)
-	a.post("/files/upload", a.Handlers.PostUploadToFS)
-
-	a.get("/delete-from-fs", a.Handlers.DeleteFromFS)
 
 	// static routes
 	fileServer := http.FileServer(http.Dir("./public"))
