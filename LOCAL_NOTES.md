@@ -478,6 +478,24 @@
 ### Updating our templates in the CLI, and making some changes to the myapp
 ### Creating our skeleton app
 ### Additional updates to the skeleton application and the celeritas project
+###  Trying out the "celeritas new <project>" command
+- Prepare celeritas-app
+  - search and replace from `github.com/tsawler/celeritas` to `github.com/john-wraa/celeritas`
+  - run `go get github.com/john-wraa/celeritas`
+  - run `go mod tidy`
+  - Push changes to GitHub and optionally create a new tag
+- Build cli in celeritas project
+  ```shell
+  cd celeritas
+  make build
+  cp dist/celeritas.exe ../testapp
+  cd ../testapp
+  ./celeritas.exe new testapp4
+  ```
+- Open new app
+- run `go mod tidy`
+- run `make start`
+- SIDENOTE: Also had to close all goland processes but one and run `go clean cache` and `go clean -modcache`
 
 
 
