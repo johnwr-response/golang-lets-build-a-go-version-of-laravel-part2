@@ -474,11 +474,13 @@
   - Solution 2: Tell your antivirus to ignore the `leakless` binary.
 - TODO: Investigate above options
 
-
-
-
-
 ## Final changes to the Celeritas CLI application
+### Updating our templates in the CLI, and making some changes to the myapp
+
+
+
+
+
 
 ## Repo creation Log
 - git init
